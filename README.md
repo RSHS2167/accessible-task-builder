@@ -1,18 +1,25 @@
-# Accessible Task Builder v5 – Optional Marking Criteria
+# Accessible Task Builder v6 - section-by-section AI permissions
 
-## Change
+This package is ready for **GitHub Pages**. It is a single-file browser app, with no server installation required.
 
-Marking criteria are optional. A task that includes its task overview, conditions, key terms and Steps for Success can be imported without any A–E rubric. It exports only portrait task/Steps pages, with no empty landscape marking sheet, teacher-comments box or result box.
+## What's new
 
-When approved A–E descriptors are included, the app still adds a single landscape marking sheet at the end with the interactive PDF controls.
+In the **Task editor -> Steps for Success** tab, each numbered section has an optional **AI use** selector:
 
-Existing tasks imported into the same browser no longer show a red review icon **solely** because A–E marking criteria are absent. Old missing-standards and generic conversion notices are cleaned up; important alerts for missing instructions, steps, conditions, key terms and difficult-to-extract worksheets are retained.
+- Level 1 - NO AI (red)
+- Level 2 - AI PLANNING (yellow)
+- Level 3 - AI COLLABORATION (green)
+- Level 4 - FULL AI (blue)
+- Level 5 - AI EXPLORATION (purple)
 
-## Updating an existing GitHub Pages site
+Selections appear as compact labels beside each section heading in the student screen viewer and in Word and interactive PDF exports. Students can click a label in the screen viewer to read a brief explanation. The colours are slightly adjusted for contrast on the small labels.
 
-1. Unzip the GitHub package.
-2. Replace `index.html` at the root of the existing repository.
-3. Commit the file, allow GitHub Pages to deploy, then hard-refresh your browser (Ctrl+Shift+R on Windows).
-4. Existing locally saved tasks are retained in the same browser/site origin. Make a backup before updating as a precaution.
+**The default is Not set.** Existing tasks and imported files do not automatically receive an AI permission. The responsible teacher must select the applicable level. The school AI-use poster and the teacher's instructions remain authoritative.
 
-The Word converter remains a separate button in the sidebar, directly below School Settings. Tasks are still stored locally in each browser.
+Individual JSON exports, batch ZIP exports, imports and browser backups preserve per-section `aiLevel` values (integer 1-5, or null). Older task JSON remains compatible. The `JSON template` includes this optional property.
+
+## Deploy to GitHub Pages
+
+Replace the repository-root `index.html` with the one in this package and commit. Keep `.nojekyll`. Once GitHub Pages deploys, perform a hard refresh (**Ctrl+Shift+R** in Chrome or Edge).
+
+This is a **browser-local application**. Tasks and progress remain in the browser where they were created. Export a backup before changing the website. The optional marking criteria, converter sidebar, and Word/PDF exports remain available.
