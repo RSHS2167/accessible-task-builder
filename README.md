@@ -59,3 +59,7 @@ Staff 'confirmation' in this prototype is an unverified local record, not a digi
 ## GitHub Pages
 
 Upload `index.html` to your existing repository's root. Keep `README.md` and `.nojekyll` with it if desired. The app runs on GitHub Pages, but browser storage remains per-device. The two local Python utilities will **not** run on GitHub Pages.
+
+## Batch import improvements
+
+Batch Import accepts the converter ZIP directly, import_all_tasks.json, a single task JSON, or multiple selected JSON files. No extraction needed when importing the converter ZIP into a current Chrome/Edge browser. Review each converted draft.
