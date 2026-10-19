@@ -1,25 +1,26 @@
-# Accessible Task Builder v6 - section-by-section AI permissions
+# Accessible Task Builder v7
 
-This package is ready for **GitHub Pages**. It is a single-file browser app, with no server installation required.
+Static, browser-based task authoring and accessible student viewer, suitable for GitHub Pages.
 
-## What's new
+## Publish to your existing GitHub Pages site
 
-In the **Task editor -> Steps for Success** tab, each numbered section has an optional **AI use** selector:
+Replace the root `index.html` with this version, commit the change, and reload the site (Ctrl+Shift+R).
+Existing tasks stored in this browser on the same domain should remain available. Always export a backup first.
 
-- Level 1 - NO AI (red)
-- Level 2 - AI PLANNING (yellow)
-- Level 3 - AI COLLABORATION (green)
-- Level 4 - FULL AI (blue)
-- Level 5 - AI EXPLORATION (purple)
+## Changes in v7
 
-Selections appear as compact labels beside each section heading in the student screen viewer and in Word and interactive PDF exports. Students can click a label in the screen viewer to read a brief explanation. The colours are slightly adjusted for contrast on the small labels.
+- Faculty organiser starts with all faculties collapsed; searching expands matching faculties.
+- Task editor includes **6. Tier variations**. Enter optional Guided or Extension task text, section headings, and individual lettered step alternatives. Blank entries fall back to Standard wording.
+- Choose **Standard**, **Guided** or **Extension** at the top of the editor or student viewer. The selected version is labelled in previews, the exported task title, and file names.
+- Word and PDF exports use hanging indents for wrapped a/b/c steps.
+- Bulk export includes Standard and any non-empty Guided/Extension alternatives.
+- Three built-in examples include editable tier variations.
 
-**The default is Not set.** Existing tasks and imported files do not automatically receive an AI permission. The responsible teacher must select the applicable level. The school AI-use poster and the teacher's instructions remain authoritative.
+## Data / safety
 
-Individual JSON exports, batch ZIP exports, imports and browser backups preserve per-section `aiLevel` values (integer 1-5, or null). Older task JSON remains compatible. The `JSON template` includes this optional property.
+Tasks save locally in your browser (localStorage), not on GitHub. Different staff and students are not synchronised. This static site has no user authentication or school database.
+The default Guided and Extension variations are sample prompts. Teachers need to check that variations remain fair, valid and aligned with the task's approved achievement standards.
 
-## Deploy to GitHub Pages
+## Word conversion
 
-Replace the repository-root `index.html` with the one in this package and commit. Keep `.nojekyll`. Once GitHub Pages deploys, perform a hard refresh (**Ctrl+Shift+R** in Chrome or Edge).
-
-This is a **browser-local application**. Tasks and progress remain in the browser where they were created. Export a backup before changing the website. The optional marking criteria, converter sidebar, and Word/PDF exports remain available.
+Use **Convert Word Tasks** under School Settings in the left sidebar to process task sheet DOCX files or ZIPs containing DOCX files. Review conversions before use.
