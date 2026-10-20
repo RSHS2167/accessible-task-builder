@@ -1,21 +1,17 @@
-# Accessible Task Builder v9
+# Accessible Task Builder v11
 
-A browser-based assessment task builder for use on GitHub Pages.
+This static single-page app is ready for GitHub Pages.
 
-## Changes in v9
+## New in v11
+- Task screens vertically and horizontally centre the reading area between the top bar and bottom navigation.
+- Long task text, step lists, conditions and key terms are automatically divided across more reader screens to avoid scrolling on standard browser sizes.
+- Supports keyboard left/right slide navigation, tier-specific content, global rich-text toolbar, hyperlinks, coloured text and nested bulleted/numbered/lettered lists.
+- Word and fillable PDF exports remain available.
 
-- Changing **Version** in the Task Editor now updates the actual editable template across the task details, context, essential question, instructions, conditions, key-term explanations and Steps for Success.
-- The **Standard** version remains the master. Guided and Extension initially inherit the Standard wording.
-- Teachers can type an alternative into any tier-aware field and restore that field to Standard at any time.
-- Organiser details, step order, marking criteria, and AI-use level selections are shared across versions.
-- Preview, Word, fillable PDF and task JSON use the selected version and preserve overrides.
-- Older saved tasks and JSON imports remain compatible.
-- v8 keyboard-arrow navigation and existing converter features are retained.
+## Publishing
+Upload `index.html` and `.nojekyll` to the root of your existing GitHub Pages repository, replacing `index.html`, then commit.
 
-## GitHub Pages update
+## Important
+Data is stored locally in each browser, not shared school-wide. Back up tasks before upgrading or clearing browser data.
 
-Replace the existing `index.html` in the root of your repository with the file in this ZIP, then commit. Reload the deployed page with Ctrl+Shift+R.
-
-**Back up your tasks first** using School Settings > Download backup.
-
-Tasks remain in local browser storage, not a shared database.
+If a single text element is exceptionally long or the browser is heavily zoomed, the reader keeps an accessible scrolling fallback rather than hiding information.

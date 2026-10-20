@@ -41,13 +41,13 @@
 .taskOverview{background:#f1f2fc;border-left:4px solid #657fc0;border-radius:9px;padding:clamp(18px,2.3vw,32px);}
 .viewerWrap .conditionGrid{max-width:1150px;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
 .viewerWrap .detailTile{padding:22px 24px}
-.viewerWrap .detailTile span{font-size:17px;font-weight:600;white-space:pre-wrap;overflow-wrap:anywhere}
+.viewerWrap .detailTile>div{font-size:17px;font-weight:600;white-space:pre-wrap;overflow-wrap:anywhere}
 .additionalConditions{margin-top:30px;max-width:1000px}
 .termviewWrap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:1200px}
 .viewerWrap .termview{display:flex;flex-direction:column;gap:8px;padding:19px 23px;border:1px solid var(--line);border-radius:11px;background:#fafcff;max-width:none}
 .viewerWrap .termview>*{padding:0;border:0;background:none!important}
 .viewerWrap .termview strong{font-size:17px}
-.viewerWrap .termview span{font-size:16px;line-height:1.55}
+.viewerWrap .termview>div{font-size:16px;line-height:1.55}
 .viewerWrap .checkline{max-width:1170px;gap:19px;padding:19px 22px;margin:12px 0;align-items:flex-start}
 .viewerWrap .checkline label{font-size:clamp(16px,1.35vw,19px);line-height:1.6}
 .viewerWrap .checkline input{width:25px;height:25px}
@@ -157,6 +157,87 @@
 .tierInlineMeta .tierFieldTag{margin:0}
 .sectionTitleRow .tierInlineField{flex:1 1 230px}
 @media(max-width:600px){.tierEditingBanner{font-size:12px}.termrow{grid-template-columns:1fr auto}.termrow .tierInlineField{grid-column:1;grid-row:2}.termrow .btn.danger{grid-column:2;grid-row:1}.tierInlineField textarea{min-height:70px}}
+
+/* One shared, unobtrusive rich-text toolbar for editable assessment content. */
+.richToolbar{position:sticky;top:0;z-index:9;display:flex;align-items:center;gap:4px;flex-wrap:wrap;background:#fff;border:1px solid #d8e3ef;box-shadow:0 4px 14px #112b4810;border-radius:11px;padding:6px 8px;margin:0 0 14px}
+.richToolbar .richTiny{font-size:11px;color:#60768e;font-weight:750;white-space:nowrap;margin:0 8px 0 2px}
+.richToolbar button{height:29px;min-width:29px;padding:3px 7px;border:1px solid transparent;border-radius:6px;background:#f5f8fc;color:#213b58;font-size:13px;font-weight:720}
+.richToolbar button:hover,.richToolbar button:focus-visible{border-color:#9db6d7;background:#e8f2ff}
+.richToolbar .richDivider{height:22px;width:1px;background:#d5e0ed;margin:0 3px}
+.richToolbar input[type=color]{height:29px;width:32px;padding:3px;cursor:pointer;border:1px solid #cad9e8;background:white;border-radius:6px}
+.richToolbar select{height:29px;max-width:132px;padding:3px 6px;border:1px solid #d3dfeb;border-radius:6px;background:#fff;font-size:12px}
+.richEditor{display:block;width:100%;min-height:44px;border:1px solid #ccd9e5;border-radius:9px;background:#fff;padding:10px 11px;line-height:1.55;color:var(--ink);outline-offset:2px;white-space:pre-wrap;overflow-wrap:anywhere;overflow:auto;word-break:break-word}
+.richEditor.richMultiline{min-height:104px}
+.richEditor:focus{border-color:#5c91c8;outline:2px solid #bad9ff}
+.richEditor:empty::before{content:attr(data-placeholder);pointer-events:none;color:#8b9aa9}
+.richEditor ul,.richEditor ol,.richDisplay ul,.richDisplay ol{margin:.25em 0 .4em;padding-left:1.65em}
+.richEditor li,.richDisplay li{margin:.15em 0}
+.richEditor a,.richDisplay a{color:#175ca1;text-decoration:underline}
+.tierInlineField .richEditor{width:100%;min-height:42px}
+.termrow .richEditor{min-width:0}
+.itemrow .richEditor{min-height:72px}
+.richDisplay{white-space:pre-wrap}
+.richDisplay p{margin:0 0 .65em}
+.richDisplay p:last-child{margin-bottom:0}
+.richDisplay ol[type=a],.richEditor ol[type=a]{list-style-type:lower-alpha}
+.richEditor p,.richDisplay p,.richEditor div,.richDisplay div{max-width:100%}
+.richEditor [style*="text-align"],.richDisplay [style*="text-align"]{white-space:pre-wrap}
+@media(max-width:600px){.richToolbar .richTiny{display:none}.richToolbar{gap:3px;padding:5px}.richToolbar button{padding:2px 6px}}
+
+/* v11: presentation-first reader. Every slide's content block is centred in the
+   actual available viewport between navigation bars, not pinned to the top.
+   Long content is paginated into more screens before it can overflow. */
+.viewerWrap .viewerSlide{
+ display:flex;align-items:center;justify-content:center;
+ min-height:0;overflow:hidden;overflow-x:hidden;
+ padding:clamp(12px,2.2dvh,26px) clamp(16px,4vw,60px);
+}
+.viewerWrap .viewerSlideInner{
+ flex:0 1 auto;min-width:0;width:min(100%,1000px);
+ max-width:100%;margin:auto;
+}
+.viewerWrap .viewerContent,.viewerWrap .termviewWrap,.viewerWrap .conditionGrid,
+.viewerWrap .criterionCard,.viewerWrap .checkline,.viewerWrap .taskOverview,
+.viewerWrap .readerIntro{max-width:100%;}
+.viewerWrap .slideHeadingRow{justify-content:center;text-align:center;gap:10px;}
+.viewerWrap .slideHeadingRow .slideTitle{text-align:center;}
+.viewerWrap .slideNumber{text-align:center;}
+.viewerWrap .aiLevelDetails{margin-left:0;}
+.viewerWrap .termviewWrap,.viewerWrap .conditionGrid{margin-left:auto;margin-right:auto;}
+.viewerWrap .criterionCard{margin-left:auto;margin-right:auto;}
+.viewerWrap .viewerSlide.readerOverflow{overflow-y:auto;align-items:safe center;}
+/* The a/b/c marker stays on the same line as the formatted step text. */
+.viewerWrap .checkline label>.richDisplay{display:inline;}
+.viewerWrap .checkline label>.richDisplay>p:first-child{display:inline;}
+/* Text itself remains left-aligned for easier reading; only its content block is centred. */
+@media (max-width:650px){
+ .viewerWrap .viewerSlide{padding:10px 13px;}
+ .viewerWrap .viewerSlideInner{width:min(100%,540px)}
+ .viewerWrap .slideHeadingRow{gap:6px}
+ .viewerWrap .termviewWrap{grid-template-columns:1fr;gap:8px}
+ .viewerWrap .conditionGrid{grid-template-columns:1fr;gap:8px}
+ .viewerWrap .viewerSlide .termview{padding:9px 12px}
+ .viewerWrap .viewerSlide .detailTile{padding:9px 12px}
+ .viewerWrap .viewerSlide .checkline{margin:6px 0;padding:10px 11px}
+}
+@media(max-height:600px){
+ .viewerWrap .viewerSlide{padding-top:6px;padding-bottom:6px}
+ .viewerWrap .slideTitle{font-size:clamp(20px,2vw,27px);margin-bottom:6px}
+ .viewerWrap .slideHeadingRow{margin-bottom:6px}
+}
+
+/* Centre incomplete final rows of cards as well as the complete slide. */
+.layout.viewing .viewerWrap .termviewWrap,.layout.viewing .viewerWrap .conditionGrid{
+ display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;gap:12px;
+}
+.layout.viewing .viewerWrap .termviewWrap>.termview,.layout.viewing .viewerWrap .conditionGrid>.detailTile{
+ flex:0 1 calc(50% - 7px);min-width:0;max-width:520px;
+}
+@media(max-width:700px){
+ .layout.viewing .viewerWrap .termviewWrap>.termview,.layout.viewing .viewerWrap .conditionGrid>.detailTile{
+  flex:1 1 100%;max-width:100%;
+ }
+}
 </style>
 </head>
 <body>
@@ -300,7 +381,7 @@ function updateTierOverride(t,tier,kind,key,value){
 }
 function effectiveTask(t,tier='standard'){
  const v=variant(t,tier);const label=TIER_NAMES[tier]||'Standard';
- return {...t,name:`${t.name} (${label})`,title:t.title||t.name,tierLabel:label,
+ return {...t,name:`${t.name} (${label})`,title:t.title||t.name,tierLabel:label,_richTier:tier,
   context:variantText(t.context,v?.context),
   essentialQuestion:variantText(t.essentialQuestion||'',v?.essentialQuestion),
   task:variantText(t.task,v?.task),
@@ -364,10 +445,88 @@ function render(){const logo=db.school.logo;$('#schoolBrand').innerHTML=(logo?`<
 function homeHTML(){let published=db.tasks.filter(t=>t.status==='published').length;let faculties=[...new Set(db.tasks.map(t=>t.faculty))].sort();let query=filter.toLowerCase();let visible=db.tasks.filter(t=>[t.faculty,t.subject,t.unit,t.name,t.title,t.code].join(' ').toLowerCase().includes(query));let groups=[...new Set(visible.map(t=>t.faculty))].sort();let cards=groups.map(f=>{let subjects=[...new Set(visible.filter(t=>t.faculty===f).map(t=>t.subject))].sort();let fs=subjects.map(s=>{let units=[...new Set(visible.filter(t=>t.faculty===f&&t.subject===s).map(t=>t.unit))].sort();return `<div class="subject"><div class="subjectName">${esc(s)} <span class="count">${visible.filter(t=>t.faculty===f&&t.subject===s).length} task${visible.filter(t=>t.faculty===f&&t.subject===s).length===1?'':'s'}</span></div>${units.map(u=>`<div class="unit"><div class="unitname">${esc(u)}</div>${visible.filter(t=>t.faculty===f&&t.subject===s&&t.unit===u).map(t=>`<div class="taskrow"><div><div class="taskheading">${meaningfulImportWarnings(t.importWarnings).length?`<span class="reviewWarning" title="${esc(meaningfulImportWarnings(t.importWarnings).join(" · "))}" aria-label="Review required">!</span>`:""}${esc(t.name)} <span class="badge ${t.status==='published'?'published':''}">${t.status==='published'?'Published':'Draft'}</span></div><div class="taskmeta">${esc(t.title||'Untitled assessment')} ${t.code?'· '+esc(t.code):''}</div></div><div class="taskActions"><button class="btn sm" data-action="view" data-id="${t.id}">View</button><button class="btn sm" data-action="edit" data-id="${t.id}">Edit</button></div></div>`).join('')}</div>`).join('')}</div>`}).join('');let open=filter.trim()?true:(facultyOpen[f]??false);return `<section class="panel facultyCard"><button class="facultyHead" aria-expanded="${open}" data-action="faculty" data-faculty="${esc(f)}"><span class="facultyTitle"><span class="facultyIcon">▣</span><span>${esc(f)} <span class="count">${visible.filter(t=>t.faculty===f).length} task${visible.filter(t=>t.faculty===f).length===1?'':'s'}</span></span></span><span>${open?'⌄':'›'}</span></button>${open?`<div class="facultyBody">${fs}</div>`:''}</section>`}).join('');return `<div class="headrow"><div><div class="eyebrow">Your assessment workspace</div><h1>Faculty organiser</h1><p class="muted nospace">Find tasks by faculty, subject and unit. Open a student view or continue editing a draft.</p></div><div class="homeActionBar"><button class="btn primary sm" data-action="create">＋ New task</button><label class="btn sm" style="cursor:pointer" title="Accepts individual or batch task JSON files and converted-task ZIPs">⇧ Import JSON / ZIP<input type="file" id="importBatchJSON" accept=".json,.zip,application/json,application/zip" multiple hidden></label><button class="btn sm" data-action="batchExport">⇩ Export ZIP</button><details class="actionMenu"><summary class="btn sm" role="button">More ▾</summary><div class="menuContents"><button class="btn sm" data-action="loadSample">Open worked example</button><button class="btn sm" data-action="jsonTemplate">JSON template</button><button class="btn sm" data-action="settings">School settings</button></div></details></div></div><div class="stats"><div class="panel stat"><strong>${faculties.length}</strong><span>Faculties</span></div><div class="panel stat"><strong>${db.tasks.length}</strong><span>Total tasks</span></div><div class="panel stat"><strong>${published}</strong><span>Published</span></div></div><div class="tools"><label class="search"><span class="sr-only"></span><input id="searchTasks" aria-label="Search tasks" value="${esc(filter)}" placeholder="Search faculty, subject, unit or task"></label><span class="muted small">${visible.length} task${visible.length===1?'':'s'} shown</span></div>${cards||`<div class="panel empty"><div class="emptyicon">▤</div><h2>${filter?'No matching tasks':'No tasks yet'}</h2><p class="muted">${filter?'Try a different search.':'Create a task to start organising your assessments.'}</p><button class="btn primary" data-action="create">＋ Create task</button></div>`}<p class="footerNote">Browser-only prototype: task data, confirmation records and completion ticks are local to this browser. Export a backup regularly. No school server, authentication or synchronisation is enabled.</p>`}
 function optionsList(xs){return [...new Set(xs.filter(Boolean))].sort().map(v=>`<option value="${esc(v)}"></option>`).join('')}
 function createHTML(){let fs=db.tasks.map(t=>t.faculty),ss=db.tasks.filter(t=>t.faculty===wizard.faculty).map(t=>t.subject),us=db.tasks.filter(t=>t.subject===wizard.subject).map(t=>t.unit);return `<div class="headrow"><div><div class="eyebrow">Step 1 of 2 · Choose a location</div><h1>Create an assessment task</h1><p class="muted nospace">Select an existing faculty, subject and unit, or type new names.</p></div><button class="btn" data-action="home">← Back to organiser</button></div><div class="panel formpanel" style="max-width:790px"><div class="fields"><div class="field"><label for="wFaculty">Faculty *</label><input id="wFaculty" list="faculties" placeholder="e.g. Technologies" value="${esc(wizard.faculty)}"><datalist id="faculties">${optionsList(fs)}</datalist></div><div class="field"><label for="wSubject">Subject *</label><input id="wSubject" list="subjects" placeholder="e.g. Digital Technologies" value="${esc(wizard.subject)}"><datalist id="subjects">${optionsList(ss)}</datalist></div><div class="field"><label for="wUnit">Unit *</label><input id="wUnit" list="units" placeholder="e.g. Robotics and automation" value="${esc(wizard.unit)}"><datalist id="units">${optionsList(us)}</datalist></div><div class="field"><label for="wName">Task name *</label><input id="wName" placeholder="e.g. Robotics Task 1" value="${esc(wizard.name)}"></div></div><div class="callout" style="margin-top:22px"><strong>Saved as a draft.</strong> Selecting Next creates the task in the correct faculty, subject and unit immediately. You can return to it at any time.</div><div class="inlineGroup" style="justify-content:flex-end;margin-top:22px"><button class="btn" data-action="home">Cancel</button><button class="btn primary" data-action="createNext">Next → Create draft</button></div></div>`}
+
+// Rich formatting is stored separately from plain assessment strings for backwards
+// compatibility with older JSON files, batch conversion and the current databases.
+const RICH_TAGS=new Set(['STRONG','B','I','EM','U','SPAN','A','P','DIV','BR','UL','OL','LI']);
+let richActive=null,richRange=null;
+function richKey(kind,key=''){return kind+(key?':'+key:'')}
+function richStore(t){if(!t.richHtml||typeof t.richHtml!=='object')t.richHtml={standard:{},guided:{},extension:{}};for(const k of ['standard','guided','extension'])if(!t.richHtml[k]||typeof t.richHtml[k]!=='object')t.richHtml[k]={};return t.richHtml}
+function cleanColor(s){s=String(s||'').trim();if(/^#[0-9a-fA-F]{6}$/.test(s))return s.toUpperCase();const m=s.match(/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/);return m&&m.slice(1).every(x=>+x<=255)?'#'+m.slice(1).map(x=>(+x).toString(16).padStart(2,'0')).join('').toUpperCase():''}
+function validHref(h){try{const url=new URL(h);return ['https:','http:','mailto:'].includes(url.protocol)&&h.length<1600?h:''}catch{return ''}}
+function sanitizeRich(html){
+ const holder=document.createElement('template');holder.innerHTML=String(html||'').slice(0,70000);const out=document.createElement('div');
+ function copy(n,into){if(n.nodeType===Node.TEXT_NODE){into.appendChild(document.createTextNode(n.nodeValue||''));return}if(n.nodeType!==Node.ELEMENT_NODE)return;
+  const tag=n.tagName;if(!RICH_TAGS.has(tag)){if(['SCRIPT','STYLE','IFRAME','OBJECT','SVG','IMG','FORM','BUTTON','INPUT'].includes(tag))return;[...n.childNodes].forEach(c=>copy(c,into));return}
+  const nn=document.createElement(tag==='FONT'?'SPAN':tag.toLowerCase());const color=cleanColor(n.style?.color||n.getAttribute('color'));if(color)nn.style.color=color;if(/^(bold|[6-9]00)$/.test(n.style?.fontWeight||''))nn.style.fontWeight='bold';if(n.style?.fontStyle==='italic')nn.style.fontStyle='italic';
+  const alignment=(n.style?.textAlign||n.getAttribute('align')||'').toLowerCase().trim();
+  if(['P','DIV','LI','UL','OL'].includes(tag)&&['left','center','right','justify'].includes(alignment))nn.style.textAlign=alignment;
+  if(tag==='OL'&&n.getAttribute('type')==='a')nn.setAttribute('type','a');
+  if(tag==='A'){const u=validHref(n.getAttribute('href')||'');if(u){nn.setAttribute('href',u);nn.setAttribute('target','_blank');nn.setAttribute('rel','noopener noreferrer')}else{[...n.childNodes].forEach(c=>copy(c,into));return}}
+  [...n.childNodes].forEach(c=>copy(c,nn));into.appendChild(nn);
+ }
+ [...holder.content.childNodes].forEach(c=>copy(c,out));return out.innerHTML;
+}
+function htmlToPlain(html){const e=document.createElement('div');e.innerHTML=sanitizeRich(html);function walk(n,depth=0){if(n.nodeType===Node.TEXT_NODE)return n.nodeValue||'';if(n.nodeType!==Node.ELEMENT_NODE)return '';const tag=n.tagName;if(tag==='BR')return '\n';if(tag==='UL'||tag==='OL'){let i=0;return [...n.children].map(c=>{if(['OL','UL'].includes(c.tagName))return walk(c,depth+1);i++;const prefix=tag==='UL'?'• ':n.getAttribute('type')==='a'?String.fromCharCode(96+i)+'. ':i+'. ';return '  '.repeat(depth)+prefix+walk(c,depth+1).trim()}).join('\n')+'\n'}if(tag==='LI')return [...n.childNodes].map(c=>walk(c,depth)).join('');let text=[...n.childNodes].map(c=>walk(c,depth)).join('');if(tag==='P'||tag==='DIV')text+='\n';return text}return [...e.childNodes].map(n=>walk(n)).join('').replace(/\n{3,}/g,'\n\n').trimEnd()}
+function fallbackRich(s){return esc(String(s||'')).replace(/\n/g,'<br>')}
+function richOf(t,key,tier='standard',plain='',overridden=false){const store=richStore(t),found=store[tier]?.[key];if(typeof found==='string')return sanitizeRich(found);if(tier!=='standard'&&!overridden&&store.standard?.[key])return sanitizeRich(store.standard[key]);return fallbackRich(plain)}
+function makeRichEditor(t,plain,key,attrs='',placeholder='',multi=true,override=false){return `<div class="richEditor ${multi?'richMultiline':''}" contenteditable="true" role="textbox" aria-multiline="${multi}" spellcheck="true" data-rich-key="${esc(key)}" data-rich-tier="${viewerTier}" data-rich-override="${override?'1':'0'}" data-placeholder="${esc(placeholder)}" ${attrs}>${richOf(t,key,viewerTier,plain,override)}</div>`}
+function toolbarHTML(){return `<div class="richToolbar" role="toolbar" aria-label="Text formatting"><span class="richTiny">Text formatting</span><button type="button" data-rich-cmd="bold" title="Bold (Ctrl+B)" aria-label="Bold"><b>B</b></button><button type="button" data-rich-cmd="italic" title="Italic (Ctrl+I)" aria-label="Italic"><i>I</i></button><label class="richTiny" for="richColour">Colour</label><input type="color" id="richColour" value="#175CA1" title="Text colour" aria-label="Text colour"><button type="button" data-rich-cmd="link" title="Add or edit hyperlink" aria-label="Add hyperlink">🔗</button><span class="richDivider"></span><button type="button" data-rich-cmd="bullet" title="Bulleted list" aria-label="Bulleted list">• ≡</button><button type="button" data-rich-cmd="number" title="Numbered list" aria-label="Numbered list">1. ≡</button><button type="button" data-rich-cmd="letter" title="Lettered list" aria-label="Lettered list">a. ≡</button><span class="richDivider"></span><span class="richTiny" aria-hidden="true">Align</span><button type="button" data-rich-cmd="alignLeft" title="Align left" aria-label="Align paragraph left">≡</button><button type="button" data-rich-cmd="alignCenter" title="Centre paragraph" aria-label="Centre paragraph">☰</button><button type="button" data-rich-cmd="alignRight" title="Align right" aria-label="Align paragraph right">≣</button><button type="button" data-rich-cmd="alignJustify" title="Justify paragraph to both sides" aria-label="Justify paragraph">▤</button><span class="richDivider"></span><button type="button" data-rich-cmd="outdent" title="Outdent / decrease list level" aria-label="Outdent">⇤</button><button type="button" data-rich-cmd="indent" title="Indent / sub-point" aria-label="Indent">⇥</button></div>`}
+function locateRich(){let el=document.activeElement?.closest?.('.richEditor');if(el&&view==='edit')richActive=el;return richActive?.isConnected?richActive:null}
+function saveRichSelection(){const sel=window.getSelection();if(!sel?.rangeCount)return;const r=sel.getRangeAt(0),host=r.commonAncestorContainer.nodeType===1?r.commonAncestorContainer:r.commonAncestorContainer.parentElement;if(host?.closest?.('.richEditor')){richActive=host.closest('.richEditor');richRange=r.cloneRange()}}
+function richApply(cmd,color){const el=locateRich();if(!el)return;el.focus();const selection=window.getSelection();if(richRange&&el.contains(richRange.commonAncestorContainer)){selection.removeAllRanges();selection.addRange(richRange)}
+ try{document.execCommand('styleWithCSS',false,true)}catch{}
+ if(cmd==='bold'||cmd==='italic')document.execCommand(cmd,false,null);
+ if(cmd==='bullet')document.execCommand('insertUnorderedList',false,null);
+ if(cmd==='number'||cmd==='letter'){document.execCommand('insertOrderedList',false,null);if(cmd==='letter'){const n=selection.anchorNode?.parentElement?.closest('ol');if(n&&el.contains(n))n.setAttribute('type','a')}}
+ if(cmd==='indent'||cmd==='outdent')document.execCommand(cmd,false,null);
+ if(['alignLeft','alignCenter','alignRight','alignJustify'].includes(cmd))document.execCommand(({alignLeft:'justifyLeft',alignCenter:'justifyCenter',alignRight:'justifyRight',alignJustify:'justifyFull'})[cmd],false,null);
+ if(cmd==='colour')document.execCommand('foreColor',false,color||'#175CA1');
+ if(cmd==='link') {const old=selection.anchorNode?.parentElement?.closest('a')?.getAttribute('href')||'https://';const href=window.prompt('Enter a link (https:// or mailto:)',old);if(href!==null){const url=validHref(href.trim());if(!url)alert('Enter a valid https://, http:// or mailto: link.');else if(selection.isCollapsed)document.execCommand('insertHTML',false,`<a href="${esc(url)}">${esc(url)}</a>`);else document.execCommand('createLink',false,url)}}
+ syncRich(el);saveRichSelection();
+}
+function syncRich(el){const t=task();if(!t||!el?.dataset?.richKey)return;const original=el.innerHTML,clean=sanitizeRich(original),key=el.dataset.richKey,tier=el.dataset.richTier||'standard';richStore(t)[tier][key]=clean;const plain=htmlToPlain(clean);
+ if(el.dataset.variantTier){updateTierOverride(t,el.dataset.variantTier,el.dataset.variantKind,el.dataset.variantKey||'',plain);const block=el.closest('.tierInlineField, .field');if(block){const tag=block.querySelector('.tierFieldTag'),reset=block.querySelector('.tierReset');if(tag)tag.textContent='Custom '+TIER_NAMES[tier]+' wording';if(reset)reset.disabled=false}}
+ else updateData(el,plain);debounceSave();
+}
+function richMarkupDisplay(t,key,plain,override=false){return `<span class="richDisplay">${richOf(t,key,t._richTier||viewerTier,plain,override)}</span>`}
+
+// Safe, limited rich-text parser shared by the reader and both document exporters.
+function richBlocks(html){
+ const root=document.createElement('div');root.innerHTML=sanitizeRich(html);const blocks=[];
+ let runs=[],depth=0,alignment='left';const style0={bold:false,italic:false,color:'',link:''};
+ const add=(txt,sty)=>{if(!txt)return;const old=runs[runs.length-1];if(old&&old.bold===sty.bold&&old.italic===sty.italic&&old.color===sty.color&&old.link===sty.link)old.text+=txt;else runs.push({...sty,text:txt})};
+ const flush=()=>{if(runs.length){blocks.push({runs,depth,align:alignment});runs=[]}};
+ function traverse(n,sty,level=0){
+  if(n.nodeType===Node.TEXT_NODE){add(n.nodeValue||'',sty);return}
+  if(n.nodeType!==Node.ELEMENT_NODE)return;
+  const tag=n.tagName;
+  if(tag==='BR'){flush();return}
+  const nextAlign=['left','center','right','justify'].includes(n.style?.textAlign)?n.style.textAlign:null;
+  if(tag==='UL'||tag==='OL'){
+   flush();const outer=alignment;if(nextAlign)alignment=nextAlign;let idx=0;
+   for(const li of [...n.children]){if(li.tagName!=='LI'){if(['OL','UL'].includes(li.tagName))traverse(li,sty,level+1);continue}idx++;depth=level+1;const marker=tag==='UL'?'• ':n.getAttribute('type')==='a'?String.fromCharCode(96+((idx-1)%26)+1)+'. ':idx+'. ';add(marker,sty);
+    for(const child of li.childNodes){if(child.nodeType===1&&['UL','OL'].includes(child.tagName)){flush();traverse(child,sty,level+1);depth=level+1}else traverse(child,sty,level+1)}flush();}
+   depth=level;alignment=outer;return;
+  }
+  const outerAlign=alignment;if(tag==='P'||tag==='DIV'||tag==='LI'){flush();if(nextAlign)alignment=nextAlign}
+  const next={...sty};if(tag==='STRONG'||tag==='B'||n.style?.fontWeight==='bold')next.bold=true;if(tag==='I'||tag==='EM'||n.style?.fontStyle==='italic')next.italic=true;
+  const color=cleanColor(n.style?.color);if(color)next.color=color;
+  if(tag==='A')next.link=validHref(n.getAttribute('href')||'');
+  for(const child of n.childNodes)traverse(child,next,level);
+  if(tag==='P'||tag==='DIV'||tag==='LI'){flush();alignment=outerAlign}
+ }
+ for(const child of root.childNodes)traverse(child,style0,0);flush();return blocks.length?blocks:[{runs:[{...style0,text:''}],depth:0,align:'left'}];
+}
+function richForExport(t,key,plain){const tier=t._richTier||'standard',r=richStore(t);if(typeof r[tier]?.[key]==='string')return sanitizeRich(r[tier][key]);if(tier!=='standard'){
+ const [kind,...rest]=key.split(':');if(String(tierOverride(t,kind,rest.join(':'))||'').trim())return fallbackRich(plain);
+ if(r.standard?.[key])return sanitizeRich(r.standard[key]);
+ }return r.standard?.[key]?sanitizeRich(r.standard[key]):fallbackRich(plain)}
+function richInViewer(t,key,plain){return `<div class="richDisplay">${richForExport(t,key,plain)}</div>`}
 const tabNames={details:'1. Task details',task:'2. What is my task?',conditions:'3. Conditions',terms:'4. Key terms',steps:'5. Steps for Success',tiers:'6. Tier variations',criteria:'7. Marking criteria',review:'8. Review & supports'};
-function editHTML(){let t=task();if(!t){view='home';return homeHTML()}return `<div class="editorHead"><div><div class="eyebrow">${esc(t.faculty)} / ${esc(t.subject)} / ${esc(t.unit)}</div><h1 style="margin-bottom:5px">${esc(t.name)} (${TIER_NAMES[viewerTier]})</h1><div class="editorStatus"><span class="badge ${t.status==='published'?'published':''}">${t.status==='published'?'Published':'Draft'}</span><span id="saveState">Saved locally</span></div></div><div class="editorActions"><label class="tierPickerLabel">Version <select id="editorTierSelect" aria-label="Select export version">${Object.entries(TIER_NAMES).map(([k,v])=>`<option value="${k}" ${viewerTier===k?'selected':''}>${v}</option>`).join('')}</select></label><button class="btn sm" data-action="home">← Organiser</button><button class="btn sm primary" data-action="viewCurrent">Preview</button><details class="actionMenu"><summary class="btn sm" role="button">Export ▾</summary><div class="menuContents"><button class="btn sm" data-action="pdf">Fillable PDF</button><button class="btn sm" data-action="word">Word document</button><button class="btn sm" data-action="taskJson">Task JSON</button><button class="btn sm" data-action="print">Print via PDF</button></div></details></div></div><div class="editorNav">${Object.entries(tabNames).map(([k,v])=>`<button class="editorTab ${editorTab===k?'active':''}" data-action="tab" data-tab="${k}">${v}</button>`).join('')}</div><div class="tierEditingBanner ${viewerTier==='standard'?'standard':''}"><strong>${TIER_NAMES[viewerTier]} template</strong><span>${viewerTier==='standard'?'You are editing the original task. Shared details and assessment structure apply to every version.':`You are editing the ${TIER_NAMES[viewerTier]} wording. Blue-outlined fields inherit Standard until changed. Shared task details, step order, and AI-use levels stay the same.`}</span></div><section class="panel formpanel">${tabContent(t)}</section><div class="inlineGroup" style="justify-content:space-between"><div class="inlineGroup"><button class="btn danger" data-action="deleteTask">Delete task</button><button class="btn" data-action="saveDraft">Save draft</button></div><div class="inlineGroup"><button class="btn" data-action="previousTab" ${editorTab==='details'?'disabled':''}>← Previous</button><button class="btn" data-action="nextTab" ${editorTab==='review'?'disabled':''}>Next →</button><button class="btn success" data-action="publish">✓ Save & ${t.status==='published'?'update':'publish'}</button></div></div><p class="footerNote">Changes save automatically to this browser. “Publish” marks a task as ready for viewing. It does not put it online or share it with students.</p>`}
+function editHTML(){let t=task();if(!t){view='home';return homeHTML()}return `<div class="editorHead"><div><div class="eyebrow">${esc(t.faculty)} / ${esc(t.subject)} / ${esc(t.unit)}</div><h1 style="margin-bottom:5px">${esc(t.name)} (${TIER_NAMES[viewerTier]})</h1><div class="editorStatus"><span class="badge ${t.status==='published'?'published':''}">${t.status==='published'?'Published':'Draft'}</span><span id="saveState">Saved locally</span></div></div><div class="editorActions"><label class="tierPickerLabel">Version <select id="editorTierSelect" aria-label="Select export version">${Object.entries(TIER_NAMES).map(([k,v])=>`<option value="${k}" ${viewerTier===k?'selected':''}>${v}</option>`).join('')}</select></label><button class="btn sm" data-action="home">← Organiser</button><button class="btn sm primary" data-action="viewCurrent">Preview</button><details class="actionMenu"><summary class="btn sm" role="button">Export ▾</summary><div class="menuContents"><button class="btn sm" data-action="pdf">Fillable PDF</button><button class="btn sm" data-action="word">Word document</button><button class="btn sm" data-action="taskJson">Task JSON</button><button class="btn sm" data-action="print">Print via PDF</button></div></details></div></div><div class="editorNav">${Object.entries(tabNames).map(([k,v])=>`<button class="editorTab ${editorTab===k?'active':''}" data-action="tab" data-tab="${k}">${v}</button>`).join('')}</div><div class="tierEditingBanner ${viewerTier==='standard'?'standard':''}"><strong>${TIER_NAMES[viewerTier]} template</strong><span>${viewerTier==='standard'?'You are editing the original task. Shared details and assessment structure apply to every version.':`You are editing the ${TIER_NAMES[viewerTier]} wording. Blue-outlined fields inherit Standard until changed. Shared task details, step order, and AI-use levels stay the same.`}</span></div>${toolbarHTML()}<section class="panel formpanel">${tabContent(t)}</section><div class="inlineGroup" style="justify-content:space-between"><div class="inlineGroup"><button class="btn danger" data-action="deleteTask">Delete task</button><button class="btn" data-action="saveDraft">Save draft</button></div><div class="inlineGroup"><button class="btn" data-action="previousTab" ${editorTab==='details'?'disabled':''}>← Previous</button><button class="btn" data-action="nextTab" ${editorTab==='review'?'disabled':''}>Next →</button><button class="btn success" data-action="publish">✓ Save & ${t.status==='published'?'update':'publish'}</button></div></div><p class="footerNote">Changes save automatically to this browser. “Publish” marks a task as ready for viewing. It does not put it online or share it with students.</p>`}
 function inputField(label,field,value,placeholder='',extra=''){return `<div class="field ${extra}"><label>${esc(label)}</label><input data-field="${field}" value="${esc(value)}" placeholder="${esc(placeholder)}"></div>`}
-function textareaField(label,field,value,placeholder='',hint=''){return `<div class="field full"><label>${esc(label)}</label><textarea data-field="${field}" placeholder="${esc(placeholder)}">${esc(value)}</textarea>${hint?`<div class="hint">${esc(hint)}</div>`:''}</div>`}
+function textareaField(label,field,value,placeholder='',hint=''){return `<div class="field full"><label>${esc(label)}</label>${makeRichEditor(task(),value,richKey(field),'data-field="'+esc(field)+'"',placeholder,true)}${hint?`<div class="hint">${esc(hint)}</div>`:''}</div>`}
 function tierEditableField(t,label,kind,key,base,{multiline=false,placeholder='',hint=''}={}){
  if(viewerTier==='standard'){
   const attr={context:'context',essentialQuestion:'essentialQuestion',task:'task'}[kind];
@@ -375,21 +534,21 @@ function tierEditableField(t,label,kind,key,base,{multiline=false,placeholder=''
  }
  const custom=tierOverride(t,kind,key),inherited=!String(custom).trim(),effective=variantText(base,custom)||'';
  const a=`data-variant-tier="${viewerTier}" data-variant-kind="${kind}" data-variant-key="${esc(key)}" aria-label="${esc(label)} for ${TIER_NAMES[viewerTier]}"`;
- return `<div class="field ${multiline?'full':''}"><label>${esc(label)} (${TIER_NAMES[viewerTier]})</label><div class="tierInlineMeta"><span class="tierFieldTag">${inherited?'Using Standard wording':'Custom '+TIER_NAMES[viewerTier]+' wording'}</span><button type="button" class="tierReset" data-action="resetTierField" data-kind="${kind}" data-key="${esc(key)}" ${inherited?'disabled':''}>Restore Standard</button></div>${multiline?`<textarea class="tierEditable" ${a} placeholder="${esc(placeholder)}">${esc(effective)}</textarea>`:`<input class="tierEditable" ${a} value="${esc(effective)}" placeholder="${esc(placeholder)}">`}${hint?`<div class="hint">${esc(hint)}</div>`:''}</div>`;
+ return `<div class="field ${multiline?'full':''}"><label>${esc(label)} (${TIER_NAMES[viewerTier]})</label><div class="tierInlineMeta"><span class="tierFieldTag">${inherited?'Using Standard wording':'Custom '+TIER_NAMES[viewerTier]+' wording'}</span><button type="button" class="tierReset" data-action="resetTierField" data-kind="${kind}" data-key="${esc(key)}" ${inherited?'disabled':''}>Restore Standard</button></div>${multiline?makeRichEditor(t,effective,richKey(kind,key),a,placeholder,true,!inherited):`<input class="tierEditable" ${a} value="${esc(effective)}" placeholder="${esc(placeholder)}">`}${hint?`<div class="hint">${esc(hint)}</div>`:''}</div>`;
 }
 function tierInlineEditor(t,kind,key,base,{multiline=false,placeholder='',standardAttrs='',label=''}={}){
  if(viewerTier==='standard'){
-  return multiline?`<textarea ${standardAttrs} placeholder="${esc(placeholder)}">${esc(base||'')}</textarea>`:`<input ${standardAttrs} value="${esc(base||'')}" placeholder="${esc(placeholder)}">`;
+  return multiline?makeRichEditor(t,base||'',richKey(kind,key),standardAttrs,placeholder,true):`<input ${standardAttrs} value="${esc(base||'')}" placeholder="${esc(placeholder)}">`;
  }
  const custom=tierOverride(t,kind,key),inherited=!String(custom).trim(),effective=variantText(base,custom)||'';
  const a=`data-variant-tier="${viewerTier}" data-variant-kind="${kind}" data-variant-key="${esc(key)}" aria-label="${esc(label||kind)} for ${TIER_NAMES[viewerTier]}"`;
- return `<div class="tierInlineField"><div class="tierInlineMeta"><span class="tierFieldTag">${inherited?'Standard fallback':TIER_NAMES[viewerTier]+' override'}</span><button type="button" class="tierReset" data-action="resetTierField" data-kind="${kind}" data-key="${esc(key)}" ${inherited?'disabled':''}>Restore Standard</button></div>${multiline?`<textarea class="tierEditable" ${a} placeholder="${esc(placeholder)}">${esc(effective)}</textarea>`:`<input class="tierEditable" ${a} value="${esc(effective)}" placeholder="${esc(placeholder)}">`}</div>`;
+ return `<div class="tierInlineField"><div class="tierInlineMeta"><span class="tierFieldTag">${inherited?'Standard fallback':TIER_NAMES[viewerTier]+' override'}</span><button type="button" class="tierReset" data-action="resetTierField" data-kind="${kind}" data-key="${esc(key)}" ${inherited?'disabled':''}>Restore Standard</button></div>${multiline?makeRichEditor(t,effective,richKey(kind,key),a,placeholder,true,!inherited):`<input class="tierEditable" ${a} value="${esc(effective)}" placeholder="${esc(placeholder)}">`}</div>`;
 }
 function tabContent(t){
  if(editorTab==='details')return `<div class="editorHelp">The name, subject and organisational details are shared across tiers. The context below can vary by tier.</div><div class="fields">${inputField('Task name (organiser)','name',t.name,'Robotics Task 1')}${inputField('Assessment title (student display)','title',t.title,'Design a robot')}${inputField('Assessment code','code',t.code,'DAT091A · Task 1')}${inputField('Year level','year',t.year,'9')}${inputField('Faculty','faculty',t.faculty)}${inputField('Subject','subject',t.subject)}${inputField('Unit','unit',t.unit)}${tierEditableField(t,'Context (optional)','context','',t.context,{multiline:true,placeholder:'Introduce the scenario or purpose of the assessment.'})}</div>`;
  if(editorTab==='task')return `<h2>What is my task?</h2><div class="editorHelp">These fields now show the <strong>${TIER_NAMES[viewerTier]}</strong> version. Editing Guided or Extension does not overwrite Standard.</div><div class="fields">${tierEditableField(t,'Essential question (optional, bold)','essentialQuestion','',t.essentialQuestion||'',{multiline:true,placeholder:'e.g. How can a robot move parcels independently?'})}${tierEditableField(t,'Task instructions','task','',t.task,{multiline:true,placeholder:'Explain what students will produce and key requirements.',hint:'Shown on the first screen with the assessment title.'})}</div>`;
- if(editorTab==='conditions')return `<div class="headrow" style="margin-bottom:18px"><div><h2>Conditions and important dates</h2><p class="muted small">Condition names and their order are shared. Change each value for the ${TIER_NAMES[viewerTier]} version; a blank variation uses Standard.</p></div><button class="btn primary sm" data-action="addCondition">＋ Add condition</button></div><div class="conditionEditor">${conditionsOf(t).map(c=>`<div class="conditionEditRow"><div class="field"><label>Condition name (all tiers)</label><input aria-label="Condition name" data-condition="${c.id}" data-property="label" value="${esc(c.label)}" placeholder="e.g. Submission"></div><div class="field"><label>Information</label>${tierInlineEditor(t,'conditionValue',c.id,c.value,{standardAttrs:`type="${c.type==='date'?'date':'text'}" data-condition="${c.id}" data-property="value" aria-label="${esc(c.label)}"`,label:c.label})}</div><button class="btn danger sm" data-action="removeCondition" data-id="${c.id}" title="Remove condition from all tiers" aria-label="Remove ${esc(c.label)}">×</button></div>`).join('')}</div><button class="btn" data-action="addCondition">＋ Add another condition</button>`;
- if(editorTab==='terms')return `<h2>Key terms</h2><p class="muted small">The term is shared, but its explanation can vary for ${TIER_NAMES[viewerTier]}. Empty variations use Standard.</p><div class="termrow tiny" style="font-weight:bold;color:#637589"><div>Term (all tiers)</div><div>Student-friendly meaning</div><div></div></div>${t.terms.map(term=>`<div class="termrow"><input aria-label="Term" data-term="${term.id}" data-property="term" value="${esc(term.term)}" placeholder="e.g. Evaluate">${tierInlineEditor(t,'termMeaning',term.id,term.meaning,{standardAttrs:`data-term="${term.id}" data-property="meaning" aria-label="Meaning"`,label:`Definition of ${term.term}`})}<button class="btn sm danger" data-action="removeTerm" data-id="${term.id}" title="Remove term from all tiers">×</button></div>`).join('')}<button class="btn" data-action="addTerm">＋ Add key term</button>`;
+ if(editorTab==='conditions')return `<div class="headrow" style="margin-bottom:18px"><div><h2>Conditions and important dates</h2><p class="muted small">Condition names and their order are shared. Change each value for the ${TIER_NAMES[viewerTier]} version; a blank variation uses Standard.</p></div><button class="btn primary sm" data-action="addCondition">＋ Add condition</button></div><div class="conditionEditor">${conditionsOf(t).map(c=>`<div class="conditionEditRow"><div class="field"><label>Condition name (all tiers)</label><input aria-label="Condition name" data-condition="${c.id}" data-property="label" value="${esc(c.label)}" placeholder="e.g. Submission"></div><div class="field"><label>Information</label>${tierInlineEditor(t,'conditionValue',c.id,c.value,{multiline:c.type!=='date',standardAttrs:`data-condition="${c.id}" data-property="value" aria-label="${esc(c.label)}"`,label:c.label})}</div><button class="btn danger sm" data-action="removeCondition" data-id="${c.id}" title="Remove condition from all tiers" aria-label="Remove ${esc(c.label)}">×</button></div>`).join('')}</div><button class="btn" data-action="addCondition">＋ Add another condition</button>`;
+ if(editorTab==='terms')return `<h2>Key terms</h2><p class="muted small">The term is shared, but its explanation can vary for ${TIER_NAMES[viewerTier]}. Empty variations use Standard.</p><div class="termrow tiny" style="font-weight:bold;color:#637589"><div>Term (all tiers)</div><div>Student-friendly meaning</div><div></div></div>${t.terms.map(term=>`<div class="termrow"><input aria-label="Term" data-term="${term.id}" data-property="term" value="${esc(term.term)}" placeholder="e.g. Evaluate">${tierInlineEditor(t,'termMeaning',term.id,term.meaning,{multiline:true,standardAttrs:`data-term="${term.id}" data-property="meaning" aria-label="Meaning"`,label:`Definition of ${term.term}`})}<button class="btn sm danger" data-action="removeTerm" data-id="${term.id}" title="Remove term from all tiers">×</button></div>`).join('')}<button class="btn" data-action="addTerm">＋ Add key term</button>`;
  if(editorTab==='steps')return `<div class="headrow" style="margin-bottom:15px"><div><h2>Steps for Success (${TIER_NAMES[viewerTier]})</h2><p class="muted small">Step order, checkboxes and AI levels are common to every tier. Headings and instructions below change with the selected version.</p></div><button class="btn primary sm" data-action="addSection">＋ Add section</button></div>${t.sections.map((sec,i)=>`<div class="sectionBox"><div class="sectionTitleRow"><span class="sectionNum">${i+1}.</span>${tierInlineEditor(t,'sectionTitle',sec.id,sec.title,{standardAttrs:`data-section="${sec.id}" data-property="title" aria-label="Section ${i+1} title"`,placeholder:'e.g. Planning and research',label:`Section ${i+1} heading`})}<span class="aiLevelEditor"><label for="aiLevel_${esc(sec.id)}">AI use</label><select id="aiLevel_${esc(sec.id)}" data-section="${sec.id}" data-property="aiLevel" aria-label="Permitted AI level for section ${i+1}"><option value="" ${!aiLevelInfo(sec.aiLevel)?'selected':''}>Not set</option>${Object.entries(AI_LEVELS).map(([n,a])=>`<option value="${n}" ${Number(sec.aiLevel)===Number(n)?'selected':''}>Level ${n} · ${esc(a.short)}</option>`).join('')}</select></span><button class="btn sm" data-action="toggleSection" data-id="${sec.id}" aria-expanded="${sec.expanded!==false}" title="Collapse or expand">${sec.expanded!==false?'▴':'▾'}</button><button class="btn sm danger" data-action="removeSection" data-id="${sec.id}" title="Delete section from all tiers">×</button></div>${sec.expanded!==false?`<div class="sectionItems">${sec.items.map((it,j)=>`<div class="itemrow"><div class="alphabet">${String.fromCharCode(97+j)}.</div>${tierInlineEditor(t,'item',it.id,it.text,{multiline:true,standardAttrs:`data-section="${sec.id}" data-item="${it.id}" aria-label="Step ${i+1}${String.fromCharCode(97+j)}"`,placeholder:'Write a clear step students can tick when complete',label:`Step ${i+1}${String.fromCharCode(97+j)}`})}<button class="btn danger sm" data-action="removeItem" data-section="${sec.id}" data-id="${it.id}" title="Remove step from all tiers">×</button></div>`).join('')}<div class="sectionControls"><button class="btn sm" data-action="addItem" data-id="${sec.id}">＋ Add subsection</button><button class="btn sm ghost" data-action="moveUp" data-id="${sec.id}" ${i===0?'disabled':''}>↑ Move up</button><button class="btn sm ghost" data-action="moveDown" data-id="${sec.id}" ${i===t.sections.length-1?'disabled':''}>↓ Move down</button></div></div>`:''}</div>`).join('')}<button class="btn" data-action="addSection">＋ Add another section</button>`;
  if(editorTab==='tiers')return tierEditorHTML(t);
  if(editorTab==='criteria')return criteriaEditorHTML(t);
@@ -411,7 +570,7 @@ function splitReaderText(text,limit){
   parts.push(pending.slice(0,end).trim());pending=pending.slice(end).trim();}
  if(pending)parts.push(pending);return parts;
 }
-function makeViewerPages(t){
+function buildViewerPages(t){
  const width=window.innerWidth||1000,height=window.innerHeight||800;
  // Size-aware chunks rather than a single long scrolling page.
  const budget=width<540?(height<710?240:400):width<900?(height<680?500:750):height<750?750:1300;
@@ -430,7 +589,7 @@ function makeViewerPages(t){
   for(const [j,it] of (section.items||[]).entries()){
    const chunks=splitReaderText(it.text||'Step not yet written',Math.max(160,budget-100));
    for(let k=0;k<chunks.length;k++){
-    const item={...it,text:chunks[k],letter:String.fromCharCode(97+j),continuation:k>0,hasCheckbox:k===chunks.length-1};
+    const item={...it,text:chunks[k],richWhole:chunks.length===1,letter:String.fromCharCode(97+j),continuation:k>0,hasCheckbox:k===chunks.length-1};
     const weight=chunks[k].length+65;
     if(stack.length&&(stack.length>=maxItems||size+weight>budget))addStack();
     stack.push(item);size+=weight;
@@ -442,6 +601,46 @@ function makeViewerPages(t){
  criteria.forEach((row,i)=>pages.push({kind:'criterion',title:'Achievement standards',item:row,index:i+1,count:criteria.length}));
  return pages;
 }
+
+/* Measured pagination: character budgeting makes a first pass; actual DOM
+   measurement is authoritative for smaller screens and unusually long text. */
+let readerPagesCache={key:'',pages:[]};
+function makeViewerPages(t){
+ const key=[t.id,t.updated||0,viewerTier,window.innerWidth,window.innerHeight,viewingGrade].join('|');
+ if(readerPagesCache.key!==key)readerPagesCache={key,pages:buildViewerPages(t)};
+ return readerPagesCache.pages;
+}
+function splitReaderChunk(text){
+ const value=String(text||'').trim();if(value.length<45)return null;
+ const mid=Math.floor(value.length*.55);
+ let at=value.lastIndexOf('\n',mid);
+ if(at<value.length*.25)at=value.lastIndexOf(' ',mid);
+ if(at<value.length*.25)at=value.indexOf(' ',mid);
+ if(at<value.length*.25||at>value.length*.85)return null;
+ return [value.slice(0,at).trim(),value.slice(at).trim()];
+}
+function splitViewerPage(page){
+ if(page.kind==='intro'){
+  const chunks=splitReaderChunk(page.chunk);if(!chunks)return null;
+  return [{...page,chunk:chunks[0]},{...page,chunk:chunks[1],part:(page.part||1)+1}];
+ }
+ if(page.kind==='steps'){
+  if(page.items.length>1){const n=Math.ceil(page.items.length/2);return [{...page,items:page.items.slice(0,n)},{...page,items:page.items.slice(n)}]}
+  if(page.items.length===1){const it=page.items[0],chunks=splitReaderChunk(it.text);if(!chunks)return null;
+   return [{...page,items:[{...it,text:chunks[0],richWhole:false,hasCheckbox:false}]},{...page,items:[{...it,text:chunks[1],richWhole:false,continuation:true,hasCheckbox:it.hasCheckbox}]}];}
+ }
+ if(page.kind==='conditions'||page.kind==='terms'){
+  if(page.items.length>1){const n=Math.ceil(page.items.length/2);return [{...page,items:page.items.slice(0,n)},{...page,items:page.items.slice(n)}]}
+  if(page.items.length===1){const it=page.items[0],key=page.kind==='conditions'?'value':'meaning',chunks=splitReaderChunk(it[key]);
+   if(!chunks)return null;return [{...page,items:[{...it,[key]:chunks[0],readerSplit:true}]},{...page,items:[{...it,[key]:chunks[1],readerSplit:true}]}];}
+ }
+ if(page.kind==='criterion'){
+  const desc=page.descriptorChunk===undefined?String(page.item.descriptors?.[viewingGrade]||'No descriptor supplied.'):page.descriptorChunk;
+  const chunks=splitReaderChunk(desc);if(!chunks)return null;
+  return [{...page,descriptorChunk:chunks[0]},{...page,descriptorChunk:chunks[1]}];
+ }
+ return null;
+}
 let viewingGrade='C';
 function viewerHTML(){
  const t=task();if(!t){view='home';return homeHTML()}
@@ -450,20 +649,20 @@ function viewerHTML(){
  let html='',number='';
  if(page.kind==='intro'){
   // Preserve the essential question in bold when it is present in the current text segment.
-  const context=String(page.chunk||'');let content=nl(context);
+  const context=String(page.chunk||'');let content=nl(context);const vt=effectiveTask(t,viewerTier);for(const [key,text] of [['context',vt.context],['essentialQuestion',vt.essentialQuestion],['task',vt.task]])if(text&&context.includes(text))content=content.replace(nl(text),richInViewer(vt,key,text));
   if(effectiveTask(t,viewerTier).essentialQuestion&&context.includes(effectiveTask(t,viewerTier).essentialQuestion))content=content.replace(nl(effectiveTask(t,viewerTier).essentialQuestion),`<strong>${nl(effectiveTask(t,viewerTier).essentialQuestion)}</strong>`);
   html=`<div class="taskOverview viewerContent readerIntro">${content}</div>`;
  }else if(page.kind==='conditions'){
-  html=page.items.length?`<div class="conditionGrid">${page.items.map(c=>`<div class="detailTile"><strong>${esc(c.label)}</strong><span>${esc(conditionDisplay(c))}</span></div>`).join('')}</div>`:'<p class="muted">No conditions have been added.</p>';
+  html=page.items.length?`<div class="conditionGrid">${page.items.map(c=>`<div class="detailTile"><strong>${esc(c.label)}</strong><div>${(c.readerSplit?nl(c.value):richInViewer(effectiveTask(t,viewerTier),richKey('conditionValue',c.id),conditionDisplay(c)))}</div></div>`).join('')}</div>`:'<p class="muted">No conditions have been added.</p>';
  }else if(page.kind==='terms'){
-  html=page.items.length?`<div class="termviewWrap">${page.items.map(x=>`<div class="termview"><strong>${esc(x.term)}</strong><span>${esc(x.meaning)}</span></div>`).join('')}</div>`:'<p class="muted">No key terms have been added.</p>';
+  html=page.items.length?`<div class="termviewWrap">${page.items.map(x=>`<div class="termview"><strong>${esc(x.term)}</strong><div>${(x.readerSplit?nl(x.meaning):richInViewer(effectiveTask(t,viewerTier),richKey('termMeaning',x.id),x.meaning))}</div></div>`).join('')}</div>`:'<p class="muted">No key terms have been added.</p>';
  }else if(page.kind==='steps'){
   number=`Steps for Success · ${page.sectionNumber} of ${page.sectionTotal}`;
   html=(viewerTier!=='standard'&&t.supportTiers?.[viewerTier]?`<div class="supportHint">${nl(t.supportTiers[viewerTier])}</div>`:'')+
-   (page.items.length?page.items.map(it=>`<div class="checkline ${p[it.id]?'done':''}">${it.hasCheckbox?`<input type="checkbox" id="check_${it.id}" data-action="check" data-id="${it.id}" ${p[it.id]?'checked':''}>`:'<span class="checkPlaceholder" aria-hidden="true"></span>'}<label ${it.hasCheckbox?`for="check_${it.id}"`:''}><span class="itemLetter">${it.letter}${it.continuation?' (continued)':''}.</span> ${nl(it.text)}</label></div>`).join(''):'<p class="muted">No steps have been added to this section.</p>');
+   (page.items.length?page.items.map(it=>`<div class="checkline ${p[it.id]?'done':''}">${it.hasCheckbox?`<input type="checkbox" id="check_${it.id}" data-action="check" data-id="${it.id}" ${p[it.id]?'checked':''}>`:'<span class="checkPlaceholder" aria-hidden="true"></span>'}<label ${it.hasCheckbox?`for="check_${it.id}"`:''}><span class="itemLetter">${it.letter}${it.continuation?' (continued)':''}.</span> ${it.richWhole?richInViewer(effectiveTask(t,viewerTier),richKey('item',it.id),it.text):nl(it.text)}</label></div>`).join(''):'<p class="muted">No steps have been added to this section.</p>');
  }else if(page.kind==='criterion'){
   number=`Criterion ${page.index} of ${page.count}`;const c=page.item;const sel=db.marking[t.id]?.[c.id]||'';
-  html=`<div class="criterionCard"><div class="criterionTitle">${esc((c.strand?c.strand+' / ':'')+c.criterion)}</div><div class="gradeTabs" role="group" aria-label="Select achievement level">${'ABCDE'.split('').map(g=>`<button type="button" class="gradeTab ${viewingGrade===g?'active':''}" data-action="viewerGrade" data-grade="${g}" aria-pressed="${viewingGrade===g}">${g}</button>`).join('')}</div><div class="descriptorContent"><strong>Standard ${viewingGrade}</strong><div>${nl(c.descriptors?.[viewingGrade]||'No descriptor supplied.')}</div></div>${role==='staff'?`<div class="markingInline">Recorded mark: <strong>${esc(sel||'Not selected')}</strong> <button type="button" class="btn sm" data-action="markViewerCriterion" data-id="${esc(c.id)}" data-grade="${viewingGrade}">Select ${viewingGrade}</button></div>`:''}</div>`;
+  html=`<div class="criterionCard"><div class="criterionTitle">${esc((c.strand?c.strand+' / ':'')+c.criterion)}</div><div class="gradeTabs" role="group" aria-label="Select achievement level">${'ABCDE'.split('').map(g=>`<button type="button" class="gradeTab ${viewingGrade===g?'active':''}" data-action="viewerGrade" data-grade="${g}" aria-pressed="${viewingGrade===g}">${g}</button>`).join('')}</div><div class="descriptorContent"><strong>Standard ${viewingGrade}</strong><div>${nl(page.descriptorChunk===undefined?(c.descriptors?.[viewingGrade]||'No descriptor supplied.'):page.descriptorChunk)}</div></div>${role==='staff'?`<div class="markingInline">Recorded mark: <strong>${esc(sel||'Not selected')}</strong> <button type="button" class="btn sm" data-action="markViewerCriterion" data-id="${esc(c.id)}" data-grade="${viewingGrade}">Select ${viewingGrade}</button></div>`:''}</div>`;
  }
  const backLabel=role==='staff'?'Editor':'Tasks';
  return `<div class="viewerWrap"><div class="viewerShell">
@@ -475,7 +674,22 @@ function viewerHTML(){
 }
 // Use readable content sizes first. If a single unusually long element does not fit,
 // keep scrolling as an accessible fallback rather than clipping information.
-function fitViewer(){const el=document.querySelector('#viewerSlide');if(!el)return;el.classList.remove('readerOverflow');if(el.scrollHeight>el.clientHeight+3)el.classList.add('readerOverflow');}
+function fitViewer(){
+ const el=document.querySelector('#viewerSlide'),inner=el?.querySelector('.viewerSlideInner');if(!inner)return;
+ const style=getComputedStyle(el),available=el.clientHeight-parseFloat(style.paddingTop)-parseFloat(style.paddingBottom);
+ const overflowing=inner.getBoundingClientRect().height>available+2;
+ el.classList.remove('readerOverflow');
+ if(!overflowing)return;
+ const pages=makeViewerPages(task());const split=splitViewerPage(pages[slide]);
+ if(split&&pages.length<600){
+  // Each split preserves all words and checkboxes; update the progress rail too.
+  pages.splice(slide,1,...split);
+  requestAnimationFrame(render);
+ }else{
+  // Avoid clipping an exceptionally long, unbreakable item or zoomed-in content.
+  el.classList.add('readerOverflow');
+ }
+}
 
 function renderModal(){
  $$('.navbtn').forEach(b=>b.classList.toggle('active',(b.id==='navHome'&&view==='home'&&!modal)||(b.id==='navSettings'&&modal==='settings')||(b.id==='navConvert'&&modal==='converter')));
@@ -493,7 +707,7 @@ function setTab(val){editorTab=val;render();window.scrollTo(0,0)}
 function fileDownload(blob,filename){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 function filename(t){return (t.name||'assessment').replace(/[^a-z0-9 -]/gi,'').trim().replace(/\s+/g,'-').slice(0,48)||'assessment'}
 function backup(){save();fileDownload(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),'accessible-task-builder-backup.json')}
-function compactTask(t){return {faculty:t.faculty,subject:t.subject,unit:t.unit,name:t.name,title:t.title,code:t.code,year:t.year,context:t.context,essentialQuestion:t.essentialQuestion||'',task:t.task,conditions:conditionsOf(t).map(({label,value,type})=>({label,value,type})),terms:t.terms.map(({term,meaning})=>({term,meaning})),sections:t.sections.map(({title,aiLevel,items})=>({title,aiLevel:aiLevelInfo(aiLevel)?.level||null,items:items.map(({text})=>({text}))})),criteria:t.criteria||defaultCriteria(),workflow:t.workflow||defaultWorkflow(),supportTiers:t.supportTiers||defaultSupportTiers(),tierVariants:compactTierVariants(t),sourceFile:t.sourceFile||'',sourceText:t.sourceText||'',importWarnings:meaningfulImportWarnings(t.importWarnings)};}
+function compactTask(t){return {faculty:t.faculty,subject:t.subject,unit:t.unit,name:t.name,title:t.title,code:t.code,year:t.year,context:t.context,essentialQuestion:t.essentialQuestion||'',task:t.task,conditions:conditionsOf(t).map(({id,label,value,type})=>({id,label,value,type})),terms:t.terms.map(({id,term,meaning})=>({id,term,meaning})),sections:t.sections.map(({id,title,aiLevel,items})=>({id,title,aiLevel:aiLevelInfo(aiLevel)?.level||null,items:items.map(({id,text})=>({id,text}))})),criteria:t.criteria||defaultCriteria(),workflow:t.workflow||defaultWorkflow(),supportTiers:t.supportTiers||defaultSupportTiers(),richHtml:t.richHtml||{},tierVariants:compactTierVariants(t),sourceFile:t.sourceFile||'',sourceText:t.sourceText||'',importWarnings:meaningfulImportWarnings(t.importWarnings)};}
 function downloadTaskJSON(t){fileDownload(new Blob([JSON.stringify({schema:'accessible-task-builder/v1',task:compactTask(t)},null,2)],{type:'application/json'}),filename(t)+'.json')}
 function downloadTaskJSONTemplate(){fileDownload(new Blob([JSON.stringify(TASK_JSON_TEMPLATE,null,2)],{type:'application/json'}),'accessible-task-template.json')}
 const TASK_JSON_TEMPLATE={schema:'accessible-task-builder/v1',task:{faculty:'Technologies',subject:'Engineering',unit:'Sheet metal',name:'Sheet Metal Parts Box',title:'Design and Manufacture a Parts Box',code:'',year:'9',context:'Describe the task context here.',essentialQuestion:'What makes a useful and safe design?',task:'Plan and manufacture a sheet metal parts box.\nProduce drawings and a production plan.\nEvaluate the finished product.',conditions:[{label:'Length',value:'',type:'text'},{label:'Genre',value:'Practical project and folio',type:'text'},{label:'Preparation',value:'In class',type:'text'},{label:'Purpose',value:'Plan, make and evaluate a product',type:'text'},{label:'Draft due date',value:'',type:'date'},{label:'Final due date',value:'',type:'date'},{label:'Submission',value:'Submit folio and finished product as directed',type:'text'}],terms:[{term:'Evaluate',meaning:'Judge how well something meets the criteria.'}],sections:[{title:'Planning',aiLevel:null,items:[{text:'Complete your working drawing.'},{text:'Write your production plan.'}]},{title:'Manufacture and evaluate',aiLevel:null,items:[{text:'Safely manufacture the parts box.'},{text:'Evaluate your product against the design criteria.'}]}],tierVariants:{guided:{task:'Use the supplied drawing scaffold when planning.',sections:[{title:'',items:['Label the supplied working drawing.','']},{title:'',items:['','']}]},extension:{task:'',sections:[{title:'',items:['Include an alternative joint design and justify your choice.','']},{title:'',items:['','']}]}}}};
@@ -514,16 +728,16 @@ function parseTaskJSON(data){
  const rawSections=normalizeArray(src.sections,'Steps for Success');
  let sections=rawSections.slice(0,80).map(v=>{
   const section=typeof v==='string'?{title:'',items:[v]}:v||{};
-  return {id:genId(),title:clean(section.title),aiLevel:aiLevelInfo(section.aiLevel)?.level||null,expanded:true,items:normalizeArray(section.items,'Section items').slice(0,140).map(it=>({id:genId(),text:clean(typeof it==='string'?it:it?.text)}))};
+  return {id:clean(section.id)||genId(),title:clean(section.title),aiLevel:aiLevelInfo(section.aiLevel)?.level||null,expanded:true,items:normalizeArray(section.items,'Section items').slice(0,140).map(it=>({id:clean(typeof it==='string'?'':it?.id)||genId(),text:clean(typeof it==='string'?it:it?.text)}))};
  });
  if(!sections.length){warnings.push('No Steps for Success were identified; create or check sections.');sections=[{id:genId(),title:'Needs review',expanded:true,items:[]}];}
  else if(sections.some(x=>!x.items.length))warnings.push('One or more Steps for Success sections contain no actions.');
  const criteria=normaliseCriteria(src.criteria);
- const conditions=rawConditions.slice(0,90).map(c=>typeof c==='string'?conditionEntry('Condition',clean(c)):conditionEntry(clean(c?.label),clean(c?.value),c?.type==='date'?'date':'text'));
- const terms=rawTerms.slice(0,90).map(x=>({id:genId(),term:clean(x?.term||''),meaning:clean(x?.meaning||'')}));
+ const conditions=rawConditions.slice(0,90).map(c=>{const v=typeof c==='string'?conditionEntry('Condition',clean(c)):conditionEntry(clean(c?.label),clean(c?.value),c?.type==='date'?'date':'text');if(c?.id)v.id=clean(c.id);return v});
+ const terms=rawTerms.slice(0,90).map(x=>({id:clean(x?.id)||genId(),term:clean(x?.term||''),meaning:clean(x?.meaning||'')}));
  if(!terms.length)warnings.push('No key terms were identified.');
  if(!conditions.length)warnings.push('No conditions were identified.');
- return {id:genId(),faculty,subject,unit,name,title:clean(src.title)||name,code:clean(src.code),year:clean(src.year),context:clean(src.context),essentialQuestion:clean(src.essentialQuestion),task:clean(src.task),conditions,terms,sections,criteria,workflow:normaliseWorkflow(src.workflow),supportTiers:{...defaultSupportTiers(),...(src.supportTiers||{})},tierVariants:restoreTierVariants(src.tierVariants,sections,conditions,terms),sourceFile:clean(src.sourceFile),sourceText:clean(src.sourceText),importWarnings:[...new Set(warnings)].slice(0,60),status:'draft',created:Date.now(),updated:Date.now()};
+ return {id:genId(),faculty,subject,unit,name,title:clean(src.title)||name,code:clean(src.code),year:clean(src.year),context:clean(src.context),essentialQuestion:clean(src.essentialQuestion),task:clean(src.task),conditions,terms,sections,criteria,workflow:normaliseWorkflow(src.workflow),supportTiers:{...defaultSupportTiers(),...(src.supportTiers||{})},richHtml:Object.fromEntries(['standard','guided','extension'].map(k=>[k,Object.fromEntries(Object.entries(src.richHtml?.[k]||{}).slice(0,800).map(([kk,v])=>[kk,typeof v==='string'?v.slice(0,55000):'']))])),tierVariants:restoreTierVariants(src.tierVariants,sections,conditions,terms),sourceFile:clean(src.sourceFile),sourceText:clean(src.sourceText),importWarnings:[...new Set(warnings)].slice(0,60),status:'draft',created:Date.now(),updated:Date.now()};
 }
 
 // Import compatibility: batch, individual, plain arrays, and the converter's ZIP.
@@ -742,7 +956,7 @@ function showConverterResults(){const target=document.querySelector('#conversion
 function downloadConverted(){if(!converterSession?.results?.length)return;const batch={schema:'accessible-task-builder/batch-v2',tasks:converterSession.results};fileDownload(new Blob([JSON.stringify(batch,null,2)],{type:'application/json'}),'converted_tasks_import.json')}
 function importConverted(){if(!converterSession?.results?.length)return;const found=importTaskCollection({tasks:converterSession.results});if(found.tasks.length){db.tasks.push(...found.tasks);save();modal='';document.querySelector('#modalRoot').innerHTML='';gotoHome();alert(found.tasks.length+' tasks imported as drafts. Red ! icons identify material needing review.')}}
 
-function printHTML(t){const termRows=t.terms.map(x=>`<tr><td>${esc(x.term)}</td><td>${nl(x.meaning)}</td></tr>`).join('');const conditions=conditionsOf(t).filter(c=>c.value.trim());return `<section class="printpage1"><div class="printHeader"><div><div><strong>${esc(t.subject)}</strong> · Year ${esc(t.year||'–')}</div><div class="printSchool">${esc(db.school.name)} ${t.code?'· '+esc(t.code):''}</div></div>${db.school.logo?`<img src="${db.school.logo}" alt="School logo">`:''}</div><div class="printTitle">Assessment: ${esc(t.title||t.name)}</div>${t.context?`<div class="printLabel">Context</div><div>${nl(t.context)}</div>`:''}<div class="printTask"><div class="printLabel" style="margin:0 0 7pt">What is my task?</div>${t.essentialQuestion?`<p><strong>${nl(t.essentialQuestion)}</strong></p>`:''}${nl(t.task)}</div><div class="printLabel">Conditions</div><div class="printConditions">${conditions.map(c=>`<div class="printCondition"><strong>${esc(c.label)}</strong><span>${nl(conditionDisplay(c))}</span></div>`).join('')}</div><div class="printLabel">Key terms</div><table class="printKeyTerms"><tbody>${termRows||'<tr><td colspan="2">No key terms added.</td></tr>'}</tbody></table></section><section class="printpage2"><div class="printStepsHeader">STEPS FOR SUCCESS <span>☑</span></div>${t.sections.map((s,i)=>`<div class="printSectionTitle"><span>${i+1}. &nbsp;${esc(s.title)}</span>${aiLevelBadge(s.aiLevel)}</div>${s.items.map((it,j)=>`<div class="printStep"><span class="printLetter">${String.fromCharCode(97+j)}.</span><span class="printText">${nl(it.text)}</span><span class="printCheckbox"></span></div>`).join('')}`).join('')}</section>`}
+function printHTML(t){const termRows=t.terms.map(x=>`<tr><td>${esc(x.term)}</td><td>${nl(x.meaning)}</td></tr>`).join('');const conditions=conditionsOf(t).filter(c=>c.value.trim());return `<section class="printpage1"><div class="printHeader"><div><div><strong>${esc(t.subject)}</strong> · Year ${esc(t.year||'–')}</div><div class="printSchool">${esc(db.school.name)} ${t.code?'· '+esc(t.code):''}</div></div>${db.school.logo?`<img src="${db.school.logo}" alt="School logo">`:''}</div><div class="printTitle">Assessment: ${esc(t.title||t.name)}</div>${t.context?`<div class="printLabel">Context</div><div>${nl(t.context)}</div>`:''}<div class="printTask"><div class="printLabel" style="margin:0 0 7pt">What is my task?</div>${t.essentialQuestion?`<p><strong>${richInViewer(t,'essentialQuestion',t.essentialQuestion)}</strong></p>`:''}${richInViewer(t,'task',t.task)}</div><div class="printLabel">Conditions</div><div class="printConditions">${conditions.map(c=>`<div class="printCondition"><strong>${esc(c.label)}</strong><span>${nl(conditionDisplay(c))}</span></div>`).join('')}</div><div class="printLabel">Key terms</div><table class="printKeyTerms"><tbody>${termRows||'<tr><td colspan="2">No key terms added.</td></tr>'}</tbody></table></section><section class="printpage2"><div class="printStepsHeader">STEPS FOR SUCCESS <span>☑</span></div>${t.sections.map((s,i)=>`<div class="printSectionTitle"><span>${i+1}. &nbsp;${esc(s.title)}</span>${aiLevelBadge(s.aiLevel)}</div>${s.items.map((it,j)=>`<div class="printStep"><span class="printLetter">${String.fromCharCode(97+j)}.</span><div class="printText">${richInViewer(t,richKey('item',it.id),it.text)}</div><span class="printCheckbox"></span></div>`).join('')}`).join('')}</section>`}
 function printTask(){exportInteractivePDF()}
 // Real offline DOCX export. OOXML files are packaged into a valid uncompressed ZIP.
 const xesc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
@@ -766,6 +980,26 @@ function wRow(cells,widths,style={}){
  return `<w:tr><w:trPr><w:cantSplit/></w:trPr>${cells.map((cell,i)=>`<w:tc><w:tcPr><w:tcW w:w="${widths[i]}" w:type="dxa"/>${style.shade?`<w:shd w:fill="${style.shade}"/>`:''}${style.lines?`<w:tcBorders><w:top w:val="single" w:color="25266F" w:sz="4"/><w:bottom w:val="single" w:color="25266F" w:sz="4"/></w:tcBorders>`:''}</w:tcPr>${typeof cell==='string'&&cell.startsWith('<w:')?cell:xmlP(cell,{size:style.size??19,bold:style.boldFirst&&i===0,line:style.line??230})}</w:tc>`).join('')}</w:tr>`;
 }
 
+
+let wordRichLinks=new Map();
+function wordRichParagraphs(t,key,text,opt={}){
+ const blocks=richBlocks(richForExport(t,key,text));const size=Math.max(15,Math.round((opt.size||20)*wordScale));
+ return blocks.map((b,i)=>{
+  const indent=(opt.indent||0)+(b.depth?b.depth*265:0),hang=opt.hanging||0;
+  const jc={center:'center',right:'right',justify:'both',left:'left'}[b.align]||'left';
+  const pp=`<w:pPr><w:jc w:val="${jc}"/><w:spacing w:before="0" w:after="${i===blocks.length-1?wspace(opt.after??40):wspace(35)}" w:line="${wspace(opt.line||240)}" w:lineRule="auto"/>${indent||hang?`<w:ind w:left="${indent}"${hang?` w:hanging="${hang}"`:''}/>`:''}</w:pPr>`;
+  let runs=b.runs.map(r=>{
+   const url=r.link?validHref(r.link):'';
+   const pr=`<w:rPr>${r.bold||opt.bold?'<w:b/>':''}${r.italic?'<w:i/>':''}${r.color?`<w:color w:val="${r.color.slice(1)}"/>`:''}${url?'<w:u w:val="single"/>':''}<w:sz w:val="${size}"/></w:rPr>`;
+   const rt=`<w:r>${pr}<w:t xml:space="preserve">${xt(r.text)}</w:t></w:r>`;
+   if(!url)return rt;
+   if(!wordRichLinks.has(url))wordRichLinks.set(url,'rIdRich'+(wordRichLinks.size+1));
+   return `<w:hyperlink r:id="${wordRichLinks.get(url)}" w:history="1">${rt}</w:hyperlink>`;
+  }).join('');
+  if(i===0&&opt.letter)runs=`<w:r><w:rPr><w:sz w:val="${size}"/></w:rPr><w:t xml:space="preserve">${xt(opt.letter+'.  ')}</w:t></w:r>`+runs;
+  return `<w:p>${pp}${runs||'<w:r><w:t> </w:t></w:r>'}</w:p>`;
+ }).join('');
+}
 function wordLetterStep(text,letter){
  const sz=Math.max(15,Math.round(19*wordScale));
  return `<w:p><w:pPr><w:spacing w:before="0" w:after="0" w:line="${wspace(242)}" w:lineRule="auto"/><w:ind w:left="390" w:hanging="390"/></w:pPr><w:r><w:rPr><w:sz w:val="${sz}"/></w:rPr><w:t xml:space="preserve">${xt(letter+'.  '+(text||''))}</w:t></w:r></w:p>`;
@@ -790,21 +1024,21 @@ function docxXml(t,img){
   parts.push(wTable([wRow([left,pic],[7600,1600])],[7600,1600],{pad:0}));
  }else parts.push(left);
  parts.push(xmlP(' ',{size:15,after:250,line:200}));
-  const panel=xmlP('WHAT IS MY TASK?',{bold:true,size:25,after:140,line:300})+(t.context?xmlP(t.context,{size:20,after:130,line:285}):'')+(t.essentialQuestion?xmlP(t.essentialQuestion,{bold:true,size:20,after:130,line:285}):'')+xmlP(t.task,{size:20,after:40,line:285});
+  const panel=xmlP('WHAT IS MY TASK?',{bold:true,size:25,after:140,line:300})+(t.context?wordRichParagraphs(t,'context',t.context,{size:20,after:130,line:285}):'')+(t.essentialQuestion?wordRichParagraphs(t,'essentialQuestion',t.essentialQuestion,{bold:true,size:20,after:130,line:285}):'')+wordRichParagraphs(t,'task',t.task,{size:20,after:40,line:285});
  parts.push(wTable([wRow([panel],[9200],{shade:'ECECFB',lines:true})],[9200],{pad:140}));
  parts.push(xmlP('CONDITIONS',{bold:true,size:25,before:170,after:110,line:300,keepNext:true}));
  const cond=conditionsOf(t).filter(c=>c.value?.trim());
- const crows=(cond.length?cond:[{label:'Conditions',value:'Not entered'}]).map(c=>wRow([xmlP(c.label,{bold:true,size:19,line:240}),xmlP(conditionDisplay(c)||'',{size:19,line:240})],[2500,6700],{size:19}));
+ const crows=(cond.length?cond:[{label:'Conditions',value:'Not entered'}]).map(c=>wRow([xmlP(c.label,{bold:true,size:19,line:240}),wordRichParagraphs(t,richKey('conditionValue',c.id),conditionDisplay(c)||'',{size:19,line:240})],[2500,6700],{size:19}));
  parts.push(wTable(crows,[2500,6700],{pad:70}));
  parts.push(xmlP('KEY TERMS',{bold:true,size:25,before:200,after:100,line:300,keepNext:true}));
  const terms=t.terms.length?t.terms:[{term:'',meaning:'No key terms listed'}];
- parts.push(wTable(terms.map((z,i)=>wRow([xmlP(z.term,{bold:true,size:19,line:230}),xmlP(z.meaning,{size:19,line:230})],[2500,6700],{shade:i%2===0?'EFEFEF':undefined,size:19})),[2500,6700],{pad:60}));
+ parts.push(wTable(terms.map((z,i)=>wRow([xmlP(z.term,{bold:true,size:19,line:230}),wordRichParagraphs(t,richKey('termMeaning',z.id),z.meaning,{size:19,line:230})],[2500,6700],{shade:i%2===0?'EFEFEF':undefined,size:19})),[2500,6700],{pad:60}));
  // Page two opens with the navy heading, and never has running headers or footers.
  parts.push(xmlP('STEPS FOR SUCCESS',{bold:true,color:'FFFFFF',shade:'071F61',pageBreak:true,after:95,size:27,line:350,indent:100,keepNext:true}));
  for(let i=0;i<t.sections.length;i++){
   const section=t.sections[i];
   parts.push(wordAIHeading(section,i));
-  const rw=section.items.map((it,j)=>wRow([wordLetterStep(it.text,String.fromCharCode(97+j)),xmlP('☐',{size:23,line:250,align:'center'})],[8550,650],{size:19}));
+  const rw=section.items.map((it,j)=>wRow([wordRichParagraphs(t,richKey('item',it.id),it.text,{size:19,line:242,indent:390,hanging:390,letter:String.fromCharCode(97+j)}),xmlP('☐',{size:23,line:250,align:'center'})],[8550,650],{size:19}));
   if(rw.length)parts.push(wTable(rw,[8550,650],{pad:55}));
   parts.push(xmlP(' ',{size:14,line:105,after:10}));
  }
@@ -819,14 +1053,23 @@ function docxXml(t,img){
 function crc32(u){let c=-1;for(let i=0;i<u.length;i++){c^=u[i];for(let k=0;k<8;k++)c=(c>>>1)^((c&1)?0xedb88320:0)}return(c^(-1))>>>0}
 function makeZip(entries){let enc=new TextEncoder(),records=[],central=[],offset=0;for(let {name,data} of entries){let n=enc.encode(name),d=typeof data==='string'?enc.encode(data):data,crc=crc32(d),h=new Uint8Array(30+n.length),v=new DataView(h.buffer);v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(8,0,true);v.setUint32(14,crc,true);v.setUint32(18,d.length,true);v.setUint32(22,d.length,true);v.setUint16(26,n.length,true);h.set(n,30);records.push(h,d);let c=new Uint8Array(46+n.length),w=new DataView(c.buffer);w.setUint32(0,0x02014b50,true);w.setUint16(4,20,true);w.setUint16(6,20,true);w.setUint32(16,crc,true);w.setUint32(20,d.length,true);w.setUint32(24,d.length,true);w.setUint16(28,n.length,true);w.setUint32(42,offset,true);c.set(n,46);central.push(c);offset+=h.length+d.length}let clen=central.reduce((n,c)=>n+c.length,0),end=new Uint8Array(22),v=new DataView(end.buffer);v.setUint32(0,0x06054b50,true);v.setUint16(8,entries.length,true);v.setUint16(10,entries.length,true);v.setUint32(12,clen,true);v.setUint32(16,offset,true);return new Blob([...records,...central,end],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'})}
 function makeDocx(t,tier='standard'){
-  t=effectiveTask(t,tier);
+  t=effectiveTask(t,tier);wordRichLinks=new Map();
   const cr=criteriaOf(t),total=cr.rows.reduce((n,r)=>n+String(r.criterion||'').length+Object.values(r.descriptors||{}).reduce((a,v)=>a+String(v||'').length,0),0);
  if(cr.rows.length>11||total>6700)throw Error('Marking standards are too long for one readable landscape Word page. Shorten or combine the criteria and export again.');
- let img=null;if(db.school.logo){let m=db.school.logo.match(/^data:image\/(png|jpeg);base64,(.+)$/);if(m){let bin=atob(m[2]);img={ext:m[1]==='jpeg'?'jpg':'png',mime:m[1]==='jpeg'?'image/jpeg':'image/png',bytes:Uint8Array.from(bin,c=>c.charCodeAt(0))}}}let ct=`<?xml version="1.0"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>${img?`<Default Extension="${img.ext}" ContentType="${img.mime}"/>`:''}<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>`;let styles=`<?xml version="1.0"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial"/><w:sz w:val="21"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="100"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:rPr><w:b/><w:sz w:val="34"/></w:rPr><w:pPr><w:spacing w:before="180" w:after="220"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="Heading 1"/><w:rPr><w:b/><w:sz w:val="27"/></w:rPr><w:pPr><w:spacing w:before="240" w:after="125"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="Heading 2"/><w:rPr><w:b/><w:sz w:val="24"/></w:rPr><w:pPr><w:keepNext/><w:spacing w:before="170" w:after="80"/></w:pPr></w:style></w:styles>`;let entries=[{name:'[Content_Types].xml',data:ct},{name:'_rels/.rels',data:`<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`},{name:'word/document.xml',data:docxXml(t,img)},{name:'word/styles.xml',data:styles},{name:'word/_rels/document.xml.rels',data:`<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rIdStyles" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>${img?`<Relationship Id="rIdLogo" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/logo.${img.ext}"/>`:''}</Relationships>`}];if(img){entries.push({name:`word/media/logo.${img.ext}`,data:img.bytes})}return makeZip(entries)}
+ let img=null;if(db.school.logo){let m=db.school.logo.match(/^data:image\/(png|jpeg);base64,(.+)$/);if(m){let bin=atob(m[2]);img={ext:m[1]==='jpeg'?'jpg':'png',mime:m[1]==='jpeg'?'image/jpeg':'image/png',bytes:Uint8Array.from(bin,c=>c.charCodeAt(0))}}}let ct=`<?xml version="1.0"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>${img?`<Default Extension="${img.ext}" ContentType="${img.mime}"/>`:''}<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>`;let styles=`<?xml version="1.0"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial"/><w:sz w:val="21"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="100"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:rPr><w:b/><w:sz w:val="34"/></w:rPr><w:pPr><w:spacing w:before="180" w:after="220"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="Heading 1"/><w:rPr><w:b/><w:sz w:val="27"/></w:rPr><w:pPr><w:spacing w:before="240" w:after="125"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="Heading 2"/><w:rPr><w:b/><w:sz w:val="24"/></w:rPr><w:pPr><w:keepNext/><w:spacing w:before="170" w:after="80"/></w:pPr></w:style></w:styles>`;let entries=[{name:'[Content_Types].xml',data:ct},{name:'_rels/.rels',data:`<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`},{name:'word/document.xml',data:docxXml(t,img)},{name:'word/styles.xml',data:styles},{name:'word/_rels/document.xml.rels',data:`<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rIdStyles" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>${img?`<Relationship Id="rIdLogo" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/logo.${img.ext}"/>`:''}${[...wordRichLinks].map(([u,id])=>`<Relationship Id="${id}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink" Target="${xt(u)}" TargetMode="External"/>`).join('')}</Relationships>`}];if(img){entries.push({name:`word/media/logo.${img.ext}`,data:img.bytes})}return makeZip(entries)}
 function exportWord(){let t=task();if(!t)return;wordScale=0.92;try{fileDownload(makeDocx(t,viewerTier),filename(effectiveTask(t,viewerTier))+'.docx')}catch(e){alert(e.message||String(e))}}
-function execute(action,d){let t=task(),sec=t?.sections.find(s=>s.id===d.id||s.id===d.section);switch(action){case'home':gotoHome();break;case'loadSample':{if(!db.tasks.some(x=>x.id===demo.id)){db.tasks.push(JSON.parse(JSON.stringify(demo)));save()}selectedId=demo.id;slide=0;role='student';view='view';render();break}case'create':wizard={faculty:'Technologies',subject:'',unit:'',name:''};view='create';render();break;case'createNext':{let f=$('#wFaculty').value.trim(),s=$('#wSubject').value.trim(),u=$('#wUnit').value.trim(),n=$('#wName').value.trim();if(!f||!s||!u||!n){alert('Please enter the faculty, subject, unit and task name.');return}let nt={id:genId(),faculty:f,subject:s,unit:u,name:n,title:n,code:'',year:'',context:'',essentialQuestion:'',task:'',conditions:defaultConditions(),terms:[],sections:[newSection()],criteria:defaultCriteria(),workflow:defaultWorkflow(),supportTiers:defaultSupportTiers(),tierVariants:{guided:{task:'',sectionTitles:{},items:{}},extension:{task:'',sectionTitles:{},items:{}}},sourceFile:'',importWarnings:[],status:'draft',created:Date.now(),updated:Date.now()};db.tasks.push(nt);selectedId=nt.id;save();view='edit';editorTab='details';render();break}case'faculty':facultyOpen[d.faculty]=!(facultyOpen[d.faculty]??false);render();break;case'view':openTask(d.id,'view');break;case'edit':openTask(d.id,'edit');break;case'viewCurrent':view='view';slide=0;role='staff';render();break;case'editCurrent':view='edit';render();break;case'returnFromView':if(role==='staff'){view='edit';render()}else gotoHome();break;case'role':role=d.role;render();break;case'tab':setTab(d.tab);break;case'nextTab':case'previousTab':{let ts=Object.keys(tabNames);setTab(ts[Math.max(0,Math.min(ts.length-1,ts.indexOf(editorTab)+(action==='nextTab'?1:-1)))]);break}case'saveDraft':t.status='draft';t.updated=Date.now();save();render();break;case'publish':t.status='published';t.updated=Date.now();save();view='view';slide=0;role='staff';render();break;case'deleteTask':if(confirm('Delete this task and its progress? This cannot be undone.')){db.tasks=db.tasks.filter(z=>z.id!==t.id);delete db.progress[t.id];save();gotoHome()}break;case'resetTierField':if(viewerTier!=='standard'){updateTierOverride(t,viewerTier,d.kind,d.key||'','');save();render()}break;case'addCondition':conditionsOf(t).push(conditionEntry('',''));save();render();break;case'removeCondition':t.conditions=conditionsOf(t).filter(z=>z.id!==d.id);save();render();break;case'taskJson':if(t)downloadTaskJSON(t);break;case'jsonTemplate':downloadTaskJSONTemplate();break;case'batchExport':exportBatch();break;case'databaseSave':saveLocalDB();break;case'databaseLoad':loadLocalDB();break;case'addCriterion':criteriaOf(t).rows.push({id:genId(),strand:'',criterion:'',descriptors:{A:'',B:'',C:'',D:'',E:''}});save();render();break;case'deleteCriterion':t.criteria.rows=t.criteria.rows.filter(x=>x.id!==d.id);save();render();break;case'confirmTask':{const w=workflowOf(t);w.confirmationStatus='confirmed';w.history.push({at:new Date().toISOString(),action:'Confirmed',by:w.confirmer||'Unspecified reviewer'});save();render();break}case'requestRevision':{const w=workflowOf(t);w.confirmationStatus='changes requested';w.history.push({at:new Date().toISOString(),action:'Changes requested',by:w.confirmer||'Unspecified reviewer'});save();render();break}case'pdf':exportInteractivePDF();break;case'addTerm':t.terms.push({id:genId(),term:'',meaning:''});save();render();break;case'removeTerm':t.terms=t.terms.filter(z=>z.id!==d.id);save();render();break;case'addSection':t.sections.push(newSection());save();render();break;case'removeSection':if(confirm('Remove this section and all its steps?')){t.sections=t.sections.filter(z=>z.id!==d.id);save();render()}break;case'toggleSection':sec.expanded=sec.expanded===false;save();render();break;case'addItem':sec.items.push({id:genId(),text:''});save();render();break;case'removeItem':sec.items=sec.items.filter(z=>z.id!==d.id);save();render();break;case'moveUp':case'moveDown':{let i=t.sections.findIndex(s=>s.id===d.id),j=i+(action==='moveUp'?-1:1);if(j>=0&&j<t.sections.length)[t.sections[i],t.sections[j]]=[t.sections[j],t.sections[i]];save();render();break}case'slideNext':slide++;render();break;case'viewerGrade':viewingGrade=d.grade;render();break;case'markViewerCriterion':{const m=db.marking[t.id]||(db.marking[t.id]={});m[d.id]=d.grade;save();render();break;}case'slidePrev':slide--;render();break;case'slideDone':alert('You have reached the end of this task. Tick off any remaining steps when they are complete.');break;case'print':printTask();break;case'word':exportWord();break;case'settings':modal='settings';renderModal();break;case'showConverter':modal='converter';renderModal();break;case'backSettings':modal='settings';renderModal();break;case'convertDocs':runWordConversion();break;case'importConverted':importConverted();break;case'downloadConverted':downloadConverted();break;case'clearTaskWarnings':if(t){t.importWarnings=[];save();render();}break;case'closeModal':modal='';$('#modalRoot').innerHTML='';$$('.navbtn').forEach(b=>b.classList.toggle('active',b.id==='navHome'&&view==='home'));break;case'saveSchool':db.school.name=$('#schoolName').value.trim()||'Your school';save();modal='';$('#modalRoot').innerHTML='';render();break;case'removeLogo':db.school.logo='';save();renderModal();break;case'backup':backup();break;default:break}}
+function execute(action,d){let t=task(),sec=t?.sections.find(s=>s.id===d.id||s.id===d.section);switch(action){case'home':gotoHome();break;case'loadSample':{if(!db.tasks.some(x=>x.id===demo.id)){db.tasks.push(JSON.parse(JSON.stringify(demo)));save()}selectedId=demo.id;slide=0;role='student';view='view';render();break}case'create':wizard={faculty:'Technologies',subject:'',unit:'',name:''};view='create';render();break;case'createNext':{let f=$('#wFaculty').value.trim(),s=$('#wSubject').value.trim(),u=$('#wUnit').value.trim(),n=$('#wName').value.trim();if(!f||!s||!u||!n){alert('Please enter the faculty, subject, unit and task name.');return}let nt={id:genId(),faculty:f,subject:s,unit:u,name:n,title:n,code:'',year:'',context:'',essentialQuestion:'',task:'',conditions:defaultConditions(),terms:[],sections:[newSection()],criteria:defaultCriteria(),workflow:defaultWorkflow(),supportTiers:defaultSupportTiers(),tierVariants:{guided:{task:'',sectionTitles:{},items:{}},extension:{task:'',sectionTitles:{},items:{}}},sourceFile:'',importWarnings:[],status:'draft',created:Date.now(),updated:Date.now()};db.tasks.push(nt);selectedId=nt.id;save();view='edit';editorTab='details';render();break}case'faculty':facultyOpen[d.faculty]=!(facultyOpen[d.faculty]??false);render();break;case'view':openTask(d.id,'view');break;case'edit':openTask(d.id,'edit');break;case'viewCurrent':view='view';slide=0;role='staff';render();break;case'editCurrent':view='edit';render();break;case'returnFromView':if(role==='staff'){view='edit';render()}else gotoHome();break;case'role':role=d.role;render();break;case'tab':setTab(d.tab);break;case'nextTab':case'previousTab':{let ts=Object.keys(tabNames);setTab(ts[Math.max(0,Math.min(ts.length-1,ts.indexOf(editorTab)+(action==='nextTab'?1:-1)))]);break}case'saveDraft':t.status='draft';t.updated=Date.now();save();render();break;case'publish':t.status='published';t.updated=Date.now();save();view='view';slide=0;role='staff';render();break;case'deleteTask':if(confirm('Delete this task and its progress? This cannot be undone.')){db.tasks=db.tasks.filter(z=>z.id!==t.id);delete db.progress[t.id];save();gotoHome()}break;case'resetTierField':if(viewerTier!=='standard'){updateTierOverride(t,viewerTier,d.kind,d.key||'','');delete richStore(t)[viewerTier][richKey(d.kind,d.key||'')];save();render()}break;case'addCondition':conditionsOf(t).push(conditionEntry('',''));save();render();break;case'removeCondition':t.conditions=conditionsOf(t).filter(z=>z.id!==d.id);save();render();break;case'taskJson':if(t)downloadTaskJSON(t);break;case'jsonTemplate':downloadTaskJSONTemplate();break;case'batchExport':exportBatch();break;case'databaseSave':saveLocalDB();break;case'databaseLoad':loadLocalDB();break;case'addCriterion':criteriaOf(t).rows.push({id:genId(),strand:'',criterion:'',descriptors:{A:'',B:'',C:'',D:'',E:''}});save();render();break;case'deleteCriterion':t.criteria.rows=t.criteria.rows.filter(x=>x.id!==d.id);save();render();break;case'confirmTask':{const w=workflowOf(t);w.confirmationStatus='confirmed';w.history.push({at:new Date().toISOString(),action:'Confirmed',by:w.confirmer||'Unspecified reviewer'});save();render();break}case'requestRevision':{const w=workflowOf(t);w.confirmationStatus='changes requested';w.history.push({at:new Date().toISOString(),action:'Changes requested',by:w.confirmer||'Unspecified reviewer'});save();render();break}case'pdf':exportInteractivePDF();break;case'addTerm':t.terms.push({id:genId(),term:'',meaning:''});save();render();break;case'removeTerm':t.terms=t.terms.filter(z=>z.id!==d.id);save();render();break;case'addSection':t.sections.push(newSection());save();render();break;case'removeSection':if(confirm('Remove this section and all its steps?')){t.sections=t.sections.filter(z=>z.id!==d.id);save();render()}break;case'toggleSection':sec.expanded=sec.expanded===false;save();render();break;case'addItem':sec.items.push({id:genId(),text:''});save();render();break;case'removeItem':sec.items=sec.items.filter(z=>z.id!==d.id);save();render();break;case'moveUp':case'moveDown':{let i=t.sections.findIndex(s=>s.id===d.id),j=i+(action==='moveUp'?-1:1);if(j>=0&&j<t.sections.length)[t.sections[i],t.sections[j]]=[t.sections[j],t.sections[i]];save();render();break}case'slideNext':slide++;render();break;case'viewerGrade':viewingGrade=d.grade;render();break;case'markViewerCriterion':{const m=db.marking[t.id]||(db.marking[t.id]={});m[d.id]=d.grade;save();render();break;}case'slidePrev':slide--;render();break;case'slideDone':alert('You have reached the end of this task. Tick off any remaining steps when they are complete.');break;case'print':printTask();break;case'word':exportWord();break;case'settings':modal='settings';renderModal();break;case'showConverter':modal='converter';renderModal();break;case'backSettings':modal='settings';renderModal();break;case'convertDocs':runWordConversion();break;case'importConverted':importConverted();break;case'downloadConverted':downloadConverted();break;case'clearTaskWarnings':if(t){t.importWarnings=[];save();render();}break;case'closeModal':modal='';$('#modalRoot').innerHTML='';$$('.navbtn').forEach(b=>b.classList.toggle('active',b.id==='navHome'&&view==='home'));break;case'saveSchool':db.school.name=$('#schoolName').value.trim()||'Your school';save();modal='';$('#modalRoot').innerHTML='';render();break;case'removeLogo':db.school.logo='';save();renderModal();break;case'backup':backup();break;default:break}}
+
+// Formatting toolbar is global and follows the last active text area.
+document.addEventListener('focusin',e=>{if(e.target.closest('.richEditor'))richActive=e.target.closest('.richEditor')});
+document.addEventListener('selectionchange',()=>{if(view==='edit')saveRichSelection()});
+document.addEventListener('mousedown',e=>{if(e.target.closest('[data-rich-cmd]')){saveRichSelection();e.preventDefault()}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-rich-cmd]');if(b){e.preventDefault();richApply(b.dataset.richCmd)}});
+document.addEventListener('input',e=>{if(e.target.matches('.richEditor')){syncRich(e.target)}});
+document.addEventListener('change',e=>{if(e.target.id==='richColour')richApply('colour',e.target.value)});
+document.addEventListener('blur',e=>{if(e.target.matches('.richEditor')){const clean=sanitizeRich(e.target.innerHTML);if(clean!==e.target.innerHTML)e.target.innerHTML=clean}},true);
 document.addEventListener('click',e=>{let a=e.target.closest('[data-action]');if(!a)return;if(a.tagName==='INPUT')return;execute(a.dataset.action,a.dataset)});
-document.addEventListener('change',e=>{let el=e.target;if(el.id==='schoolLogo'){let file=el.files?.[0];if(!file)return;if(!['image/png','image/jpeg'].includes(file.type)){alert('Please choose a PNG or JPEG logo.');return}if(file.size>1200000){alert('Please choose a logo under 1.2 MB for local browser storage.');return}let reader=new FileReader();reader.onload=()=>{db.school.logo=reader.result;save();renderModal()};reader.readAsDataURL(file);return}if(el.id==='importTaskJSON'){const f=el.files?.[0];if(!f)return;f.text().then(txt=>{try{const raw=JSON.parse(txt);const imported=parseTaskJSON(raw);db.tasks.push(imported);selectedId=imported.id;save();view='edit';editorTab='details';render();alert('Task imported as a draft.')}catch(err){alert('Could not import task JSON: '+err.message)}});return}if(el.id==='importBatchJSON'){const files=Array.from(el.files||[]);importBatchFiles(files).catch(e=>alert('Batch import failed: '+e.message)).finally(()=>{el.value=''});return}if(el.id==='tierSelect'||el.id==='editorTierSelect'){viewerTier=el.value;slide=0;render();return}if(el.id==='importBackup'){let file=el.files?.[0];if(!file)return;let reader=new FileReader();reader.onload=()=>{try{let val=JSON.parse(reader.result);if(!Array.isArray(val.tasks)||!val.school||!val.progress)throw Error('Invalid data');if(confirm('Replace all local tasks and settings with this backup?')){db=val;db.tasks.forEach(t=>{normaliseConditions(t);t.importWarnings=meaningfulImportWarnings(t.importWarnings)});save();modal='';$('#modalRoot').innerHTML='';gotoHome()}}catch(e){alert('This is not a valid Task Builder backup file.')}};reader.readAsText(file);return}if(el.dataset.action==='check'){let t=task();db.progress[t.id]=db.progress[t.id]||{};db.progress[t.id][el.dataset.id]=el.checked;save();el.closest('.checkline')?.classList.toggle('done',el.checked);let d=doneCount(t),n=totalItems(t);let status=$('.viewerProgressText'),rail=$('.progressFill');if(status)status.textContent=`${d} / ${n} steps complete`;if(rail)rail.style.width=(n?Math.round(100*d/n):0)+'%';return}if(el.dataset.criterion){const c=criteriaOf(task()).rows.find(q=>q.id===el.dataset.criterion);if(c){if(el.dataset.grade)c.descriptors[el.dataset.grade]=el.value;else c[el.dataset.property]=el.value}save();return}if(el.dataset.workflow){workflowOf(task())[el.dataset.workflow]=el.value;save();return}if(el.dataset.support){task().supportTiers[el.dataset.support]=el.value;save();return}if(el.dataset.variantTier){updateTierOverride(task(),el.dataset.variantTier,el.dataset.variantKind,el.dataset.variantKey||'',el.value);save();const box=el.closest('.tierInlineField, .field');if(box){const tag=box.querySelector('.tierFieldTag'),reset=box.querySelector('.tierReset');if(tag)tag.textContent=el.value.trim()?(TIER_NAMES[el.dataset.variantTier]+' override'):'Standard fallback';if(reset)reset.disabled=!el.value.trim();}return}if(el.dataset.gradePick){const t=task();const marks=db.marking[t.id]||(db.marking[t.id]={});marks[el.dataset.gradePick]=el.value;save();render();return}if(el.dataset.field||el.dataset.term||el.dataset.item||el.dataset.section||el.dataset.condition){updateData(el);save()}});
+document.addEventListener('change',e=>{let el=e.target;if(el.id==='schoolLogo'){let file=el.files?.[0];if(!file)return;if(!['image/png','image/jpeg'].includes(file.type)){alert('Please choose a PNG or JPEG logo.');return}if(file.size>1200000){alert('Please choose a logo under 1.2 MB for local browser storage.');return}let reader=new FileReader();reader.onload=()=>{db.school.logo=reader.result;save();renderModal()};reader.readAsDataURL(file);return}if(el.id==='importTaskJSON'){const f=el.files?.[0];if(!f)return;f.text().then(txt=>{try{const raw=JSON.parse(txt);const imported=parseTaskJSON(raw);db.tasks.push(imported);selectedId=imported.id;save();view='edit';editorTab='details';render();alert('Task imported as a draft.')}catch(err){alert('Could not import task JSON: '+err.message)}});return}if(el.id==='importBatchJSON'){const files=Array.from(el.files||[]);importBatchFiles(files).catch(e=>alert('Batch import failed: '+e.message)).finally(()=>{el.value=''});return}if(el.id==='tierSelect'||el.id==='editorTierSelect'){viewerTier=el.value;slide=0;render();return}if(el.id==='importBackup'){let file=el.files?.[0];if(!file)return;let reader=new FileReader();reader.onload=()=>{try{let val=JSON.parse(reader.result);if(!Array.isArray(val.tasks)||!val.school||!val.progress)throw Error('Invalid data');if(confirm('Replace all local tasks and settings with this backup?')){db=val;db.tasks.forEach(t=>{normaliseConditions(t);t.importWarnings=meaningfulImportWarnings(t.importWarnings)});save();modal='';$('#modalRoot').innerHTML='';gotoHome()}}catch(e){alert('This is not a valid Task Builder backup file.')}};reader.readAsText(file);return}if(el.dataset.action==='check'){let t=task();db.progress[t.id]=db.progress[t.id]||{};db.progress[t.id][el.dataset.id]=el.checked;save();el.closest('.checkline')?.classList.toggle('done',el.checked);let d=doneCount(t),n=totalItems(t);let status=$('.viewerProgressText'),rail=$('.progressFill');if(status)status.textContent=`${d} / ${n} steps complete`;if(rail)rail.style.width=(n?Math.round(100*d/n):0)+'%';return}if(el.dataset.criterion){const c=criteriaOf(task()).rows.find(q=>q.id===el.dataset.criterion);if(c){if(el.dataset.grade)c.descriptors[el.dataset.grade]=el.value;else c[el.dataset.property]=el.value}save();return}if(el.dataset.workflow){workflowOf(task())[el.dataset.workflow]=el.value;save();return}if(el.dataset.support){task().supportTiers[el.dataset.support]=el.value;save();return}if(el.matches?.('.richEditor'))return;if(el.dataset.variantTier){updateTierOverride(task(),el.dataset.variantTier,el.dataset.variantKind,el.dataset.variantKey||'',el.value);save();const box=el.closest('.tierInlineField, .field');if(box){const tag=box.querySelector('.tierFieldTag'),reset=box.querySelector('.tierReset');if(tag)tag.textContent=el.value.trim()?(TIER_NAMES[el.dataset.variantTier]+' override'):'Standard fallback';if(reset)reset.disabled=!el.value.trim();}return}if(el.dataset.gradePick){const t=task();const marks=db.marking[t.id]||(db.marking[t.id]={});marks[el.dataset.gradePick]=el.value;save();render();return}if(el.dataset.field||el.dataset.term||el.dataset.item||el.dataset.section||el.dataset.condition){updateData(el);save()}});
 // Keyboard shortcuts for the full-screen task viewer only.
 // Never take arrow keys away from editable fields, selects, open menus or dialogs.
 document.addEventListener('keydown',e=>{
@@ -847,8 +1090,8 @@ document.addEventListener('keydown',e=>{
  if(page)page.scrollTop=0;
 });
 let viewerResizeTimer;window.addEventListener('resize',()=>{if(view==='view'){clearTimeout(viewerResizeTimer);viewerResizeTimer=setTimeout(render,180)}});
-document.addEventListener('input',e=>{let el=e.target;if(el.id==='searchTasks'){filter=el.value;let st=el.selectionStart;render();let ne=$('#searchTasks');ne.focus();ne.setSelectionRange(st,st);return}if(el.id==='wFaculty'||el.id==='wSubject'||el.id==='wUnit'||el.id==='wName'){wizard[{wFaculty:'faculty',wSubject:'subject',wUnit:'unit',wName:'name'}[el.id]]=el.value;return}if(el.dataset.field||el.dataset.term||el.dataset.item||el.dataset.section||el.dataset.condition){updateData(el);debounceSave()}});
-function updateData(el){let t=task();if(!t)return;if(el.dataset.condition){const c=conditionsOf(t).find(x=>x.id===el.dataset.condition);if(c)c[el.dataset.property]=el.value;t.updated=Date.now();return}if(el.dataset.field){let fields=el.dataset.field.split('.'),obj=t;for(let i=0;i<fields.length-1;i++)obj=obj[fields[i]];obj[fields.at(-1)]=el.value;t.updated=Date.now();return}if(el.dataset.term){let term=t.terms.find(z=>z.id===el.dataset.term);if(term)term[el.dataset.property]=el.value;return}if(el.dataset.section){let sec=t.sections.find(z=>z.id===el.dataset.section);if(!sec)return;if(el.dataset.item){let item=sec.items.find(z=>z.id===el.dataset.item);if(item)item.text=el.value}else if(el.dataset.property==='aiLevel')sec.aiLevel=aiLevelInfo(el.value)?.level||null;else sec[el.dataset.property]=el.value}}
+document.addEventListener('input',e=>{let el=e.target;if(el.id==='searchTasks'){filter=el.value;let st=el.selectionStart;render();let ne=$('#searchTasks');ne.focus();ne.setSelectionRange(st,st);return}if(el.id==='wFaculty'||el.id==='wSubject'||el.id==='wUnit'||el.id==='wName'){wizard[{wFaculty:'faculty',wSubject:'subject',wUnit:'unit',wName:'name'}[el.id]]=el.value;return}if(el.matches?.('.richEditor'))return;if(el.dataset.field||el.dataset.term||el.dataset.item||el.dataset.section||el.dataset.condition){updateData(el);debounceSave()}});
+function updateData(el,provided){let t=task();if(!t)return;const value=provided===undefined?el.value:provided;if(el.dataset.condition){const c=conditionsOf(t).find(x=>x.id===el.dataset.condition);if(c)c[el.dataset.property]=value;t.updated=Date.now();return}if(el.dataset.field){let fields=el.dataset.field.split('.'),obj=t;for(let i=0;i<fields.length-1;i++)obj=obj[fields[i]];obj[fields.at(-1)]=value;t.updated=Date.now();return}if(el.dataset.term){let term=t.terms.find(z=>z.id===el.dataset.term);if(term)term[el.dataset.property]=value;return}if(el.dataset.section){let sec=t.sections.find(z=>z.id===el.dataset.section);if(!sec)return;if(el.dataset.item){let item=sec.items.find(z=>z.id===el.dataset.item);if(item)item.text=value}else if(el.dataset.property==='aiLevel')sec.aiLevel=aiLevelInfo(el.value)?.level||null;else sec[el.dataset.property]=value}}
 $('#navHome').addEventListener('click',gotoHome);$('#navSettings').addEventListener('click',()=>execute('settings',{}));$('#navConvert').addEventListener('click',()=>execute('showConverter',{}));window.addEventListener('afterprint',()=>{document.title='Accessible Task Builder'});render();
 
 // Keep the handout to exactly two pages: overview on page one and steps on page two.
@@ -903,6 +1146,7 @@ async function buildInteractivePDF(t,S=1,tier='standard'){
  let obj=[],alloc=()=>{obj.push(null);return obj.length},put=(ref,data)=>{obj[ref-1]=data},add=data=>{let r=alloc();put(r,data);return r};
  const regular=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>');
  const bold=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>');
+ const italic=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding >>');const boldItalic=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-BoldOblique /Encoding /WinAnsiEncoding >>');
  const pages=[],pageRefs=[],widgetRefs=[];
  let page=null,y=0;
  const widths=(s,sz,b=false)=>{cx.font=`${b?'bold ':''}${sz}px Arial`;return cx.measureText(pdfText(s)).width*1.065};
@@ -914,6 +1158,37 @@ async function buildInteractivePDF(t,S=1,tier='standard'){
  function assertFit(h){if(y-h<44){if(h>PAGE_H-100)throw Error('A single section is too large. Please shorten its text.');newPage();}}
  const paragraph=(str,x,w,sz,lead,b=false,c='#202020')=>{let arr=wrap(str,w,sz,b);assertFit((arr.length+1)*lead);for(let txt of arr){label(txt,x,y-sz,sz,b,c);y-=lead}return arr.length};
  const heading=str=>{assertFit(28*S);label(str.toUpperCase(),M,y-14*S,12.5*S,true);y-=29*S};
+
+ // Rich wrapping accounts for colours, emphasis, lists and clickable links.
+ function styledLayout(html,w,size,boldDefault=false){
+  const blocks=richBlocks(html),lines=[];for(const block of blocks){let line=[],used=0,indent=Math.min(w*.26,block.depth*12*S);const max=Math.max(45,w-indent);
+   const flush=()=>{lines.push({runs:line,indent,used,max,align:block.align||'left',endOfBlock:false});line=[];used=0};
+   for(const r of block.runs){const pieces=r.text.split(/(\s+)/);
+    for(const piece of pieces){if(!piece)continue;const parts=piece.split('\n');
+     for(let k=0;k<parts.length;k++){const bit=parts[k];if(bit){const b=r.bold||boldDefault,m=widths(bit,size,b);if(used+m>max&&used>0&&bit.trim())flush();if(!line.length&&!bit.trim())continue;line.push({...r,text:bit,bold:b});used+=m}if(k<parts.length-1)flush();}
+    }
+   }
+   if(line.length||!lines.length)flush();
+   if(lines.length)lines[lines.length-1].endOfBlock=true;
+  }return lines;
+ }
+ function richDraw(lines,x,baseline,sz,lead,defaultColor='#202020'){
+  let yy=baseline;
+  for(const lineRuns of lines){let xx=x+lineRuns.indent;
+   const remaining=Math.max(0,lineRuns.max-lineRuns.used);
+   if(lineRuns.align==='center')xx+=remaining/2;
+   else if(lineRuns.align==='right')xx+=remaining;
+   const spaces=lineRuns.runs.reduce((acc,run)=>acc+(run.text.match(/ /g)||[]).length,0);
+   const spaceExtra=lineRuns.align==='justify'&&!lineRuns.endOfBlock&&spaces>0?remaining/spaces:0;
+   for(const run of lineRuns.runs){const f=run.bold?(run.italic?'F4':'F2'):(run.italic?'F3':'F1');const colour=run.color|| (run.link?'#175CA1':defaultColor);
+    page.ops.push(col(colour)+`BT /${f} ${sz.toFixed(2)} Tf 1 0 0 1 ${xx.toFixed(2)} ${yy.toFixed(2)} Tm ${lit(run.text)} Tj ET\n`);
+    const sizeRun=widths(run.text,sz,run.bold),url=validHref(run.link||'');
+    if(url&&run.text.trim())page.fields.push({kind:'link',url,rect:[xx,yy-2,xx+sizeRun,yy+sz+1]});
+    xx+=sizeRun+(run.text.match(/ /g)||[]).length*spaceExtra;
+   }yy-=lead;
+  }
+ }
+
  let img=null;
  if(db.school.logo){try{const im=new Image();im.src=db.school.logo;await im.decode();const can=document.createElement('canvas');let q=Math.min(1,340/Math.max(im.naturalWidth,im.naturalHeight));can.width=Math.max(1,Math.round(im.naturalWidth*q));can.height=Math.max(1,Math.round(im.naturalHeight*q));const c2=can.getContext('2d');c2.fillStyle='#FFFFFF';c2.fillRect(0,0,can.width,can.height);c2.drawImage(im,0,0,can.width,can.height);img={bytes:Uint8Array.from(atob(can.toDataURL('image/jpeg',.9).split(',')[1]),ch=>ch.charCodeAt(0)),w:can.width,h:can.height}}catch(e){console.warn('Unable to include logo',e)}}
  let imageRef=img?add([`<< /Type /XObject /Subtype /Image /Width ${img.w} /Height ${img.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${img.bytes.length} >>\nstream\n`,img.bytes,'\nendstream']):null;
@@ -934,9 +1209,9 @@ async function buildInteractivePDF(t,S=1,tier='standard'){
  y-=36*S;
  // Lavender task panel; thin blue rules above and below (not an all-round frame).
  const intro=[t.context,t.essentialQuestion,t.task].filter(x=>x?.trim()).join('\n\n');
- const introBlocks=[{text:t.context,bold:false},{text:t.essentialQuestion,bold:true},{text:t.task,bold:false}]
+ const introBlocks=[{key:'context',text:t.context,bold:false},{key:'essentialQuestion',text:t.essentialQuestion,bold:true},{key:'task',text:t.task,bold:false}]
    .filter(b=>String(b.text||'').trim())
-   .map(b=>({...b,lines:wrap(b.text,CONTENT-22,10*S,b.bold)}));
+   .map(b=>({...b,lines:styledLayout(richForExport(t,b.key,b.text),CONTENT-22,10*S,b.bold)}));
  const introLineCount=introBlocks.reduce((n,b)=>n+b.lines.length,0);
  const boxH=(32+introLineCount*13.5+13+Math.max(0,introBlocks.length-1)*6)*S;
  assertFit(boxH+8*S);const boxTop=y;
@@ -944,17 +1219,17 @@ async function buildInteractivePDF(t,S=1,tier='standard'){
  line(M,boxTop,RIGHT,boxTop,'#25266F',.65);line(M,boxTop-boxH,RIGHT,boxTop-boxH,'#25266F',.65);
  label('WHAT IS MY TASK?',M+7,boxTop-20*S,12.5*S,true,'#111111');
  let cy=boxTop-37*S;
- introBlocks.forEach((b,i)=>{if(i)cy-=6*S;for(const str of b.lines){label(str,M+8,cy,10*S,b.bold,'#161616');cy-=13.5*S}});
+ introBlocks.forEach((b,i)=>{if(i)cy-=6*S;richDraw(b.lines,M+8,cy,10*S,13.5*S,'#161616');cy-=b.lines.length*13.5*S});
  y=boxTop-boxH-10*S;
  heading('Conditions');
  const cond=conditionsOf(t).filter(c=>c.value?.trim());
- for(const c of cond){const lab=wrap(c.label,108*S,10*S,true),val=wrap(conditionDisplay(c),CONTENT-141*S,10*S);const h=(Math.max(lab.length,val.length)*14+5)*S;assertFit(h);let yy=y-10*S;lab.forEach(str=>{label(str,M+6,yy,10*S,true);yy-=14*S});yy=y-10*S;val.forEach(str=>{label(str,M+126*S,yy,10*S,false);yy-=14*S});y-=h}
+ for(const c of cond){const lab=wrap(c.label,108*S,10*S,true),val=styledLayout(richForExport(t,richKey('conditionValue',c.id),conditionDisplay(c)),CONTENT-141*S,10*S);const h=(Math.max(lab.length,val.length)*14+5)*S;assertFit(h);let yy=y-10*S;lab.forEach(str=>{label(str,M+6,yy,10*S,true);yy-=14*S});richDraw(val,M+126*S,y-10*S,10*S,14*S);y-=h}
  y-=9*S;
  heading('Key terms');
  for(let i=0;i<t.terms.length;i++){
-  let trow=t.terms[i],l=wrap(trow.term,120*S,9.6*S,true),v=wrap(trow.meaning,CONTENT-150*S,9.6*S,false);
+  let trow=t.terms[i],l=wrap(trow.term,120*S,9.6*S,true),v=styledLayout(richForExport(t,richKey('termMeaning',trow.id),trow.meaning),CONTENT-150*S,9.6*S);
   let h=(Math.max(l.length,v.length)*13.5+7)*S;assertFit(h);
-  if(i%2===0)rect(M,y,CONTENT,h,'#EFEFEF');let ly=y-11*S;l.forEach(str=>{label(str,M+7,ly,9.6*S,true);ly-=13.5*S});ly=y-11*S;v.forEach(str=>{label(str,M+136*S,ly,9.6*S);ly-=13.5*S});y-=h;
+  if(i%2===0)rect(M,y,CONTENT,h,'#EFEFEF');let ly=y-11*S;l.forEach(str=>{label(str,M+7,ly,9.6*S,true);ly-=13.5*S});richDraw(v,M+136*S,y-11*S,9.6*S,13.5*S);y-=h;
  }
  // The task overview may now flow onto extra portrait pages when necessary.
  newPage();y=PAGE_H-31;
@@ -980,9 +1255,9 @@ async function buildInteractivePDF(t,S=1,tier='standard'){
    y-=(headH+6*S);
   for(let j=0;j<section.items.length;j++){
    const item=section.items[j],letter=`${String.fromCharCode(97+j)}.`;
-   const wrapped=wrap(item.text||'',CONTENT-104*S,9.75*S),h=(Math.max(19,wrapped.length*13.3+7))*S;assertFit(h);
+   const wrapped=styledLayout(richForExport(t,richKey('item',item.id),item.text||''),CONTENT-104*S,9.75*S),h=(Math.max(19,wrapped.length*13.3+7))*S;assertFit(h);
    label(letter,M+29*S,y-10*S,9.75*S);
-   let yy=y-10*S;wrapped.forEach(str=>{label(str,M+47*S,yy,9.75*S);yy-=13.3*S});
+   richDraw(wrapped,M+47*S,y-10*S,9.75*S,13.3*S);
    const sq=15*S,left=RIGHT-26*S,bot=y-6*S-sq;
    page.fields.push({id:item.id,checked:!!prog[item.id],rect:[left,bot,left+sq,bot+sq],name:`step_${i+1}_${j+1}_${String(item.id).replace(/[^a-zA-Z0-9]/g,'')}`});
    y-=h;
@@ -1055,13 +1330,14 @@ async function buildInteractivePDF(t,S=1,tier='standard'){
  }
 
  const pagesRef=alloc(),acroRef=alloc();
- const resources=`<< /Font << /F1 ${regular} 0 R /F2 ${bold} 0 R >> ${imageRef?`/XObject << /Logo ${imageRef} 0 R >>`:''} >>`;
+ const resources=`<< /Font << /F1 ${regular} 0 R /F2 ${bold} 0 R /F3 ${italic} 0 R /F4 ${boldItalic} 0 R >> ${imageRef?`/XObject << /Logo ${imageRef} 0 R >>`:''} >>`;
  const blank='0 0 0 RG 1 w 1 1 12 12 re S\n';
  const checked='0 0 0 RG 1 w 1 1 12 12 re S 1.9 w 2.2 7.0 m 5.2 3.3 l 11.4 11.2 l S\n';
  const offRef=add(`<< /Type /XObject /Subtype /Form /BBox [0 0 14 14] /Resources << >> /Length ${utf8.encode(blank).length} >>\nstream\n${blank}endstream`);
  const onRef=add(`<< /Type /XObject /Subtype /Form /BBox [0 0 14 14] /Resources << >> /Length ${utf8.encode(checked).length} >>\nstream\n${checked}endstream`);
  for(const p of pages){const annots=[];for(const f of p.fields){const [x1,y1,x2,y2]=f.rect;
    let r;
+   if(f.kind==='link'){r=add(`<< /Type /Annot /Subtype /Link /Rect [${x1.toFixed(2)} ${y1.toFixed(2)} ${x2.toFixed(2)} ${y2.toFixed(2)}] /Border [0 0 0] /A << /S /URI /URI ${lit(f.url)} >> >>`);annots.push(r);continue}
    if(f.kind==='grade'){
      const w=x2-x1,h=y2-y1;
      const off=`0.7 0.75 0.84 RG 0.7 w 0.5 0.5 ${Math.max(1,w-1).toFixed(2)} ${Math.max(1,h-1).toFixed(2)} re S\n`;
